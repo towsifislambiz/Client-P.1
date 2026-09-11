@@ -433,13 +433,41 @@
     "name": "Hasan",
     "role": "Super Administrator",
     "avatar": "",
-    "passwordHash": "$2b$10$7QLJlV3k.3m3uruWQSmAte5O0kGNTRWRd1OpRZCLzfygOGY3Zf5Mi",
-    "lastLogin": "2026-09-11T20:43:10.492Z",
+    "passwordHash": "$2b$10$8fqn0LoF1OiIvVZyVgZMd.rV12RP/kZ9F9k2Yrfm9JXVvAAZ47ubG",
+    "lastLogin": "2026-09-11T21:40:03.174Z",
     "updatedAt": "2026-09-11T19:51:03.662Z"
   },
   "inquiries": [],
   "payments": [],
   "recentActivity": [
+    {
+      "id": "act-1789162803176-jwtcq",
+      "type": "auth",
+      "action": "Admin admin@Hasan logged in successfully",
+      "description": "IP: ::1",
+      "timestamp": "2026-09-11T21:40:03.176Z"
+    },
+    {
+      "id": "act-1789162777106-9d6ye",
+      "type": "auth",
+      "action": "Admin admin@Hasan logged in successfully",
+      "description": "IP: ::1",
+      "timestamp": "2026-09-11T21:39:37.106Z"
+    },
+    {
+      "id": "act-1789162777096-0fcoa",
+      "type": "auth",
+      "action": "Admin admin@Hasan logged in successfully",
+      "description": "IP: ::1",
+      "timestamp": "2026-09-11T21:39:37.096Z"
+    },
+    {
+      "id": "act-1789162749502-epcjg",
+      "type": "auth",
+      "action": "Admin admin@Hasan logged in successfully",
+      "description": "IP: ::1",
+      "timestamp": "2026-09-11T21:39:09.502Z"
+    },
     {
       "id": "act-1789159390493-yyo9q",
       "type": "auth",
@@ -761,34 +789,6 @@
       "action": "Reset logo to default (navbarLogo)",
       "description": "Reset logo to default (navbarLogo)",
       "timestamp": "2026-09-11T14:20:11.801Z"
-    },
-    {
-      "id": "act-1789136411798-5sgq2",
-      "type": "branding",
-      "action": "Updated site logo / branding",
-      "description": "Changed: navbarLogo",
-      "timestamp": "2026-09-11T14:20:11.798Z"
-    },
-    {
-      "id": "act-1789136411796-xn734",
-      "type": "image",
-      "action": "Reset image to default: হিরো স্লাইড ১ — হোম ইন্টারনেট",
-      "description": "Reset image to default: হিরো স্লাইড ১ — হোম ইন্টারনেট",
-      "timestamp": "2026-09-11T14:20:11.796Z"
-    },
-    {
-      "id": "act-1789136411793-1g9nb",
-      "type": "image",
-      "action": "Updated image: হিরো স্লাইড ১ — হোম ইন্টারনেট",
-      "description": "Replaced /assets/hero-home.png with /uploads/custom-home.png",
-      "timestamp": "2026-09-11T14:20:11.793Z"
-    },
-    {
-      "id": "act-1789136411791-kciln",
-      "type": "contact",
-      "action": "Reset global contact settings to default",
-      "description": "Reset global contact settings to default",
-      "timestamp": "2026-09-11T14:20:11.791Z"
     }
   ],
   "servers": [
