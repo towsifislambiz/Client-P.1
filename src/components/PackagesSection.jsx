@@ -51,7 +51,7 @@ export default function PackagesSection({ onSelectPackage }) {
                   filter === "all" ? "bg-white text-blue-600 shadow-md" : "text-slate-600 hover:text-slate-900"
                 }`}
               >
-                সব প্যাকেজ ({packages.length}টি)
+                সব প্যাকেজ ({packageList.length}টি)
               </button>
               <button
                 onClick={() => setFilter("home")}

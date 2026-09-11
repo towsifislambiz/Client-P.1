@@ -73,7 +73,7 @@ export const packages = [
     name: "Silver+",
     speed: 50,
     speedUnit: "Mbps",
-    price: 890,
+    price: 1,
     badge: "Popular",
     category: "home",
     accentColor: "from-blue-600 to-cyan-500",

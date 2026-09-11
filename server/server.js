@@ -7,6 +7,7 @@ dotenv.config();
 import express from "express";
 import cors from "cors";
 import path from "path";
+import fs from "fs";
 import { fileURLToPath } from "url";
 import helmet from "helmet";
 
@@ -41,7 +42,7 @@ app.use(helmet({
   crossOriginOpenerPolicy: { policy: "same-origin-allow-popups" },
 }));
 
-// 2. CORS Configuration
+// 2. CORS Configuration (Allows Vercel domains, localhost, and custom domains)
 app.use(cors({
   origin: true,
   credentials: true,
@@ -54,7 +55,7 @@ app.use(ipResolverMiddleware);
 // 4. Layer-7 DDoS, Rate Limiter, Burst Flood & Bot Shield
 app.use(ddosShieldMiddleware);
 
-// 5. Body Parsing with Safe Memory Limits (2MB default to prevent memory exhaustion)
+// 5. Body Parsing with Safe Memory Limits
 app.use(express.json({ limit: SECURITY_CONFIG.payloadLimits.defaultBody }));
 app.use(express.urlencoded({ extended: true, limit: SECURITY_CONFIG.payloadLimits.defaultBody }));
 
@@ -68,15 +69,23 @@ try {
 } catch (e) {}
 app.use("/uploads", express.static(UPLOAD_DIR));
 
-// 7. API Routes
-app.use("/api/auth", authRoutes);
-app.use("/api", siteDataRoutes);
-app.use("/api/images", imageRoutes);
-app.use("/api/packages", packageRoutes);
-app.use("/api/offices", officeRoutes);
-app.use("/api/branding", brandingRoutes);
-app.use("/api/settings", settingsRoutes);
-app.use("/api/security", securityRoutes);
+// URL normalization for Vercel Serverless Function rewrites
+app.use((req, res, next) => {
+  if (req.url && !req.url.startsWith("/api") && !req.url.startsWith("/uploads")) {
+    req.url = "/api" + (req.url.startsWith("/") ? req.url : "/" + req.url);
+  }
+  next();
+});
+
+// 7. API Routes (Dual-mounted for direct /api/... and stripped /... paths)
+app.use(["/api/auth", "/auth"], authRoutes);
+app.use(["/api/images", "/images"], imageRoutes);
+app.use(["/api/packages", "/packages"], packageRoutes);
+app.use(["/api/offices", "/offices"], officeRoutes);
+app.use(["/api/branding", "/branding"], brandingRoutes);
+app.use(["/api/settings", "/settings"], settingsRoutes);
+app.use(["/api/security", "/security"], securityRoutes);
+app.use(["/api", "/"], siteDataRoutes);
 
 // Health check
 app.get("/api/health", (req, res) => {

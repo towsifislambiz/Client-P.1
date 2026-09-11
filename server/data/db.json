@@ -176,7 +176,7 @@
       "name": "Silver+",
       "speed": 50,
       "speedUnit": "Mbps",
-      "price": 800,
+      "price": 1,
       "currency": "৳",
       "badge": "Popular",
       "category": "home",
@@ -192,7 +192,7 @@
         "24/7 Phone and Online Support",
         "1:8 Contention Ratio"
       ],
-      "updatedAt": "2026-09-11T14:42:27.331Z"
+      "updatedAt": "2026-09-11T17:19:43.138Z"
     },
     {
       "id": "gold-plus",
@@ -426,6 +426,27 @@
   "inquiries": [],
   "payments": [],
   "recentActivity": [
+    {
+      "id": "act-1789147183140-vfx8l",
+      "type": "package",
+      "action": "Updated package: Silver+",
+      "description": "Price: ৳1, Speed: 50 Mbps",
+      "timestamp": "2026-09-11T17:19:43.140Z"
+    },
+    {
+      "id": "act-1789147173403-q5mqq",
+      "type": "package",
+      "action": "Updated package: Silver+",
+      "description": "Price: ৳890, Speed: 50 Mbps",
+      "timestamp": "2026-09-11T17:19:33.403Z"
+    },
+    {
+      "id": "act-1789146694111-01501",
+      "type": "package",
+      "action": "Updated package: Silver+",
+      "description": "Price: ৳1, Speed: 50 Mbps",
+      "timestamp": "2026-09-11T17:11:34.111Z"
+    },
     {
       "id": "act-1789143138011-s74sz",
       "type": "auth",
