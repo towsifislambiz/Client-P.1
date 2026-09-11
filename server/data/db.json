@@ -421,11 +421,18 @@
   "admin": {
     "email": "admin@linkbd.net",
     "passwordHash": "$2b$10$XnXeCINLjGFtBFvh6wdwLO0X2SAAX497IqG74HUqX83wp3oO/VV52",
-    "lastLogin": "2026-09-11T15:46:57.419Z"
+    "lastLogin": "2026-09-11T16:12:18.010Z"
   },
   "inquiries": [],
   "payments": [],
   "recentActivity": [
+    {
+      "id": "act-1789143138011-s74sz",
+      "type": "auth",
+      "action": "Admin logged in successfully",
+      "description": "IP: ::1",
+      "timestamp": "2026-09-11T16:12:18.011Z"
+    },
     {
       "id": "act-1789141617422-um9kk",
       "type": "auth",

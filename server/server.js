@@ -86,19 +86,24 @@ app.get("/api/health", (req, res) => {
 app.use(errorHandler);
 
 // Start Server & Configure Anti-Slowloris Timeouts
-const server = app.listen(PORT, () => {
-  console.log(`====================================================`);
-  console.log(`🚀 Link BD CMS Backend & DDoS Shield running on port ${PORT}`);
-  console.log(`   Health Check: http://localhost:${PORT}/api/health`);
-  console.log(`   API Endpoint: http://localhost:${PORT}/api/site-data`);
-  console.log(`   Security SOC: http://localhost:${PORT}/api/security/status`);
-  console.log(`   Uploads Dir:  ${UPLOAD_DIR}`);
-  console.log(`====================================================`);
-});
+let server;
+if (!process.env.VERCEL) {
+  server = app.listen(PORT, () => {
+    console.log(`====================================================`);
+    console.log(`🚀 Link BD CMS Backend & DDoS Shield running on port ${PORT}`);
+    console.log(`   Health Check: http://localhost:${PORT}/api/health`);
+    console.log(`   API Endpoint: http://localhost:${PORT}/api/site-data`);
+    console.log(`   Security SOC: http://localhost:${PORT}/api/security/status`);
+    console.log(`   Uploads Dir:  ${UPLOAD_DIR}`);
+    console.log(`====================================================`);
+  });
 
-// Mitigate Slowloris & Slow HTTP Connection Floods
-server.headersTimeout = SECURITY_CONFIG.timeouts.headersTimeout;
-server.requestTimeout = SECURITY_CONFIG.timeouts.requestTimeout;
-server.keepAliveTimeout = SECURITY_CONFIG.timeouts.keepAliveTimeout;
+  // Mitigate Slowloris & Slow HTTP Connection Floods
+  if (server) {
+    server.headersTimeout = SECURITY_CONFIG.timeouts.headersTimeout;
+    server.requestTimeout = SECURITY_CONFIG.timeouts.requestTimeout;
+    server.keepAliveTimeout = SECURITY_CONFIG.timeouts.keepAliveTimeout;
+  }
+}
 
 export default app;
