@@ -84,7 +84,7 @@ export default function OwnerAndOffices() {
                   <h4 className="text-lg font-bold text-slate-900 mb-2">{office.city} Office</h4>
                   <p className="text-xs text-slate-600 leading-relaxed mb-4 flex items-start gap-2">
                     <MapPin className="w-4 h-4 text-blue-600 shrink-0 mt-0.5" />
-                    <span>{office.address}</span>
+                    <span>{(office.address && !office.address.toLowerCase().includes("hudai")) ? office.address : "Sarmin Market, 4th floor 27/4, Road No.13, Uttara House Building, Dhaka 1230 Bangladesh"}</span>
                   </p>
                 </div>
 

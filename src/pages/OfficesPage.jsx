@@ -9,6 +9,9 @@ export default function OfficesPage() {
   const [selectedOffice, setSelectedOffice] = useState(0);
 
   const activeOffice = offices[selectedOffice] || offices[0] || {};
+  const displayAddress = (activeOffice.address && !activeOffice.address.toLowerCase().includes("hudai"))
+    ? activeOffice.address
+    : "Sarmin Market, 4th floor 27/4, Road No.13, Uttara House Building, Dhaka 1230 Bangladesh";
 
   return (
     <div className="py-8 sm:py-12 bg-slate-50 min-h-screen">
@@ -137,7 +140,7 @@ export default function OfficesPage() {
                     <MapPin className="w-4 h-4 sm:w-5 sm:h-5 text-blue-600 shrink-0 mt-0.5" />
                     <div>
                       <p className="text-[10px] sm:text-xs font-bold text-slate-500 uppercase">অফিসের ঠিকানা</p>
-                      <p className="text-xs sm:text-sm font-semibold text-slate-900 mt-0.5 leading-relaxed">{activeOffice.address}</p>
+                      <p className="text-xs sm:text-sm font-semibold text-slate-900 mt-0.5 leading-relaxed">{displayAddress}</p>
                     </div>
                   </div>
 

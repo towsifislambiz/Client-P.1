@@ -266,7 +266,9 @@ export default function ContactPage() {
                     {off.type}
                   </span>
                   <h4 className="font-extrabold text-slate-900 text-sm sm:text-base mt-2 mb-1">{off.name}</h4>
-                  <p className="text-xs text-slate-600 leading-relaxed mb-2.5">{off.address}</p>
+                  <p className="text-xs text-slate-600 leading-relaxed mb-2.5">
+                    {(off.address && !off.address.toLowerCase().includes("hudai")) ? off.address : "Sarmin Market, 4th floor 27/4, Road No.13, Uttara House Building, Dhaka 1230 Bangladesh"}
+                  </p>
                   <p className="text-xs font-bold text-emerald-600">ফোন: {off.phone}</p>
                 </div>
 

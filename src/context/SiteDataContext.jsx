@@ -76,7 +76,24 @@ export const SiteDataProvider = ({ children }) => {
   const [offices, setOffices] = useState(() => {
     try {
       const saved = localStorage.getItem("linkbd_custom_offices");
-      return saved ? JSON.parse(saved) : defaultCompanyInfo.offices;
+      if (saved) {
+        if (saved.toLowerCase().includes("hudai")) {
+          localStorage.removeItem("linkbd_custom_offices");
+          localStorage.removeItem("linkbd_offices_mtime");
+          return defaultCompanyInfo.offices;
+        }
+        const parsed = JSON.parse(saved);
+        return parsed.map(o => {
+          if (o.id === "head-office" && (o.address?.toLowerCase().includes("hudai") || !o.address?.trim())) {
+            return {
+              ...o,
+              address: "Sarmin Market, 4th floor 27/4, Road No.13, Uttara House Building, Dhaka 1230 Bangladesh"
+            };
+          }
+          return o;
+        });
+      }
+      return defaultCompanyInfo.offices;
     } catch {
       return defaultCompanyInfo.offices;
     }
@@ -260,28 +277,18 @@ export const SiteDataProvider = ({ children }) => {
 
           // 2. Offices Reconciliation
           if (d.offices && Array.isArray(d.offices) && d.offices.length > 0) {
-            const localMtime = Number(localStorage.getItem("linkbd_offices_mtime") || 0);
-            const serverMtime = Math.max(
-              ...d.offices.map(o => o.updatedAt ? new Date(o.updatedAt).getTime() : 0),
-              0
-            );
-            if (!localMtime || serverMtime >= localMtime) {
-              setOffices(d.offices);
-              localStorage.setItem("linkbd_custom_offices", JSON.stringify(d.offices));
-            } else {
-              const saved = localStorage.getItem("linkbd_custom_offices");
-              if (saved) {
-                const localList = JSON.parse(saved);
-                setOffices(localList);
-                localList.forEach(off => {
-                  fetch(`/api/offices/${off.id}`, {
-                    method: "PUT",
-                    headers: getAuthHeaders(),
-                    body: JSON.stringify(off)
-                  }).catch(() => {});
-                });
+            const cleanOffices = d.offices.map(o => {
+              if (o.id === "head-office" && (o.address?.toLowerCase().includes("hudai") || !o.address?.trim())) {
+                return {
+                  ...o,
+                  address: "Sarmin Market, 4th floor 27/4, Road No.13, Uttara House Building, Dhaka 1230 Bangladesh"
+                };
               }
-            }
+              return o;
+            });
+            setOffices(cleanOffices);
+            localStorage.setItem("linkbd_custom_offices", JSON.stringify(cleanOffices));
+            localStorage.setItem("linkbd_offices_mtime", String(Date.now()));
           }
 
           // Servers Reconciliation

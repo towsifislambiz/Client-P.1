@@ -202,11 +202,22 @@ class DataService {
   // ===================== SITE DATA =====================
   getSiteData() {
     const db = this.readDatabase();
+    const rawOffices = (db.offices || defaultOffices).sort((a, b) => (a.sortOrder || 0) - (b.sortOrder || 0));
+    const safeOffices = rawOffices.map(o => {
+      if (o.id === "head-office" && (o.address?.toLowerCase().includes("hudai") || !o.address?.trim())) {
+        return {
+          ...o,
+          address: "Sarmin Market, 4th floor 27/4, Road No.13, Uttara House Building, Dhaka 1230 Bangladesh"
+        };
+      }
+      return o;
+    });
+
     return {
       branding: db.branding || defaultLogo,
       images: db.images || defaultPageImages,
       packages: (db.packages || defaultPackages).sort((a, b) => (a.sortOrder || 0) - (b.sortOrder || 0)),
-      offices: (db.offices || defaultOffices).sort((a, b) => (a.sortOrder || 0) - (b.sortOrder || 0)),
+      offices: safeOffices,
       servers: (db.servers || defaultServers).sort((a, b) => (a.sortOrder || 0) - (b.sortOrder || 0)),
       adPopup: db.adPopup || defaultAdPopup,
       contact: db.contact || defaultGlobalContact,
@@ -382,12 +393,28 @@ class DataService {
   // ===================== OFFICES =====================
   getOffices() {
     const db = this.readDatabase();
-    return (db.offices || defaultOffices).sort((a, b) => (a.sortOrder || 0) - (b.sortOrder || 0));
+    const list = (db.offices || defaultOffices).sort((a, b) => (a.sortOrder || 0) - (b.sortOrder || 0));
+    return list.map(o => {
+      if (o.id === "head-office" && (o.address?.toLowerCase().includes("hudai") || !o.address?.trim())) {
+        return {
+          ...o,
+          address: "Sarmin Market, 4th floor 27/4, Road No.13, Uttara House Building, Dhaka 1230 Bangladesh"
+        };
+      }
+      return o;
+    });
   }
 
   getOfficeById(id) {
     const db = this.readDatabase();
-    return (db.offices || []).find(o => o.id === id);
+    const off = (db.offices || []).find(o => o.id === id);
+    if (off && off.id === "head-office" && (off.address?.toLowerCase().includes("hudai") || !off.address?.trim())) {
+      return {
+        ...off,
+        address: "Sarmin Market, 4th floor 27/4, Road No.13, Uttara House Building, Dhaka 1230 Bangladesh"
+      };
+    }
+    return off;
   }
 
   createOffice(officeData) {
@@ -427,6 +454,10 @@ class DataService {
     const db = this.readDatabase();
     const index = db.offices.findIndex(o => o.id === id);
     if (index === -1) throw new Error(`Office with ID "${id}" not found`);
+
+    if (updates.address && updates.address.toLowerCase().includes("hudai")) {
+      updates.address = "Sarmin Market, 4th floor 27/4, Road No.13, Uttara House Building, Dhaka 1230 Bangladesh";
+    }
 
     db.offices[index] = {
       ...db.offices[index],
