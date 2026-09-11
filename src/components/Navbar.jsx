@@ -120,19 +120,19 @@ export default function Navbar({ onOpenConnectionModal }) {
           scrolled ? "glass-nav-scrolled" : "glass-nav"
         }`}
       >
-        <div className="max-w-[1440px] mx-auto px-3 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-14 sm:h-16 lg:h-18">
+        <div className="max-w-[1440px] mx-auto px-2 sm:px-4 lg:px-3 xl:px-6 2xl:px-8">
+          <div className="flex items-center justify-between h-14 sm:h-16 lg:h-17">
             {/* Brand Logo */}
             <Link
               to="/"
               onClick={handleLogoClick}
-              className="flex items-center group shrink-0 mr-2 sm:mr-4 xl:mr-6 cursor-pointer"
+              className="flex items-center group shrink-0 mr-1.5 lg:mr-2 xl:mr-4 cursor-pointer"
               title="Link BD - হোম পেইজে যান"
             >
               <img
                 src={branding.navbarLogo || "/assets/logo.png"}
                 alt="Link BD"
-                className="h-7 sm:h-9 lg:h-10 w-auto object-contain transition-transform duration-200 group-hover:scale-105"
+                className="h-7 sm:h-8 lg:h-8 xl:h-9 2xl:h-10 w-auto object-contain transition-transform duration-200 group-hover:scale-105"
                 onError={(e) => {
                   e.currentTarget.src = "/assets/logo.png";
                 }}
@@ -140,7 +140,7 @@ export default function Navbar({ onOpenConnectionModal }) {
             </Link>
 
             {/* Desktop Navigation Links */}
-            <nav className="hidden lg:flex items-center gap-1 xl:gap-1.5 p-1.5 rounded-2xl bg-gradient-to-r from-blue-50/90 via-slate-100/95 to-cyan-50/90 border border-blue-200/70 shadow-sm backdrop-blur-md">
+            <nav className="hidden lg:flex items-center gap-0.5 xl:gap-1 2xl:gap-1.5 p-1 lg:p-1 xl:p-1.5 rounded-xl xl:rounded-2xl bg-gradient-to-r from-blue-50/90 via-slate-100/95 to-cyan-50/90 border border-blue-200/70 shadow-sm backdrop-blur-md shrink min-w-0">
               {navLinks.map((link) => {
                 const isActive = location.pathname === link.to;
                 return (
@@ -148,7 +148,7 @@ export default function Navbar({ onOpenConnectionModal }) {
                     key={link.to}
                     to={link.to}
                     onClick={(e) => handleNavLinkClick(e, link.to)}
-                    className={`relative px-3 xl:px-3.5 py-1.5 rounded-xl transition-all duration-200 whitespace-nowrap cursor-pointer text-[13.5px] xl:text-[14.5px] font-bold ${
+                    className={`relative px-1.5 lg:px-2 xl:px-2.5 2xl:px-3.5 py-1 xl:py-1.5 rounded-lg xl:rounded-xl transition-all duration-200 whitespace-nowrap cursor-pointer text-[11px] lg:text-[11.5px] xl:text-[13px] 2xl:text-[14px] font-bold ${
                       isActive
                         ? "text-white font-extrabold"
                         : "text-slate-800 hover:text-blue-700 hover:bg-white/90"
@@ -157,7 +157,7 @@ export default function Navbar({ onOpenConnectionModal }) {
                     {isActive && (
                       <motion.div
                         layoutId="activeNavPill"
-                        className="absolute inset-0 bg-gradient-to-r from-blue-600 to-cyan-600 rounded-xl shadow-md shadow-blue-500/25 -z-10"
+                        className="absolute inset-0 bg-gradient-to-r from-blue-600 to-cyan-600 rounded-lg xl:rounded-xl shadow-md shadow-blue-500/25 -z-10"
                         transition={{ type: "spring", stiffness: 380, damping: 30 }}
                       />
                     )}
@@ -168,14 +168,14 @@ export default function Navbar({ onOpenConnectionModal }) {
             </nav>
 
             {/* CTA Buttons */}
-            <div className="hidden lg:flex items-center gap-3">
+            <div className="hidden lg:flex items-center shrink-0 ml-1.5 lg:ml-2 xl:ml-3">
               <button
                 onClick={onOpenConnectionModal}
-                className="relative group overflow-hidden rounded-xl p-px font-bold text-xs shadow-md shadow-blue-500/20 cursor-pointer"
+                className="relative group overflow-hidden rounded-xl p-px font-bold text-xs shadow-md shadow-blue-500/20 cursor-pointer shrink-0"
               >
                 <span className="absolute inset-0 bg-gradient-to-r from-blue-600 via-cyan-500 to-blue-700 transition-all duration-300 group-hover:opacity-90"></span>
-                <span className="relative flex items-center gap-1.5 px-4 py-2.5 rounded-[11px] bg-gradient-to-r from-blue-600 to-cyan-600 text-white transition-all duration-200 group-hover:bg-opacity-0">
-                  <Wifi className="w-3.5 h-3.5" />
+                <span className="relative flex items-center gap-1.5 px-2.5 lg:px-3 xl:px-4 py-1.5 lg:py-2 xl:py-2.5 rounded-[11px] bg-gradient-to-r from-blue-600 to-cyan-600 text-white text-[11px] lg:text-[11.5px] xl:text-xs transition-all duration-200 group-hover:bg-opacity-0 whitespace-nowrap">
+                  <Wifi className="w-3 h-3 lg:w-3.5 lg:h-3.5" />
                   নতুন সংযোগ
                 </span>
               </button>

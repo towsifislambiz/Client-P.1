@@ -143,7 +143,7 @@ export default function CoveragePage({ onOpenConnectionModal }) {
                 type="text"
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
-                placeholder="আপনার জেলা বা এলাকার নাম (যেমন: Uttara, Kushtia, Madhukhali)..."
+                placeholder="আপনার জেলা বা এলাকার নাম (যেমন: Uttara, Kushtia)..."
                 className="w-full pl-11 pr-4 py-3.5 sm:py-4 rounded-xl sm:rounded-2xl bg-slate-900 border border-slate-700 text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-cyan-400 text-xs sm:text-sm shadow-xl"
               />
             </div>

@@ -49,7 +49,7 @@ function AppContent() {
   // Public Website Shell (100% Preserved)
   return (
     <SmoothScroll>
-      <div className="min-h-screen bg-slate-50 text-slate-900 font-sans flex flex-col justify-between selection:bg-blue-600 selection:text-white relative">
+      <div className="min-h-screen bg-slate-50 text-slate-900 font-sans flex flex-col justify-between selection:bg-blue-600 selection:text-white relative overflow-x-hidden">
         <ScrollToTop />
         <ScrollProgress />
         <CustomCursor />
