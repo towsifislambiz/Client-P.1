@@ -14,24 +14,24 @@ export default function OfficesPage() {
     : "Sarmin Market, 4th floor 27/4, Road No.13, Uttara House Building, Dhaka 1230 Bangladesh";
 
   return (
-    <div className="py-8 sm:py-12 bg-slate-50 min-h-screen">
+    <div className="py-5 sm:py-8 lg:py-10 bg-slate-50 min-h-screen">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Page Hero */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="text-center max-w-3xl mx-auto mb-10 sm:mb-16 pt-2 sm:pt-4"
+          className="text-center max-w-3xl mx-auto mb-6 sm:mb-8 lg:mb-10 pt-1 sm:pt-2"
         >
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full text-[11px] sm:text-xs font-bold uppercase tracking-wider bg-blue-100 text-blue-700 mb-3">
+          <div className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full text-[10.5px] sm:text-xs font-bold uppercase tracking-wider bg-blue-100 text-blue-700 mb-2.5">
             <Building className="w-3.5 h-3.5 text-blue-600" />
             অফিসিয়াল কার্যালয় ও যোগাযোগ কেন্দ্র
           </div>
-          <h1 className="text-2xl sm:text-4xl lg:text-5xl font-black tracking-tight text-slate-900 leading-snug sm:leading-tight">
+          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-slate-900 leading-snug">
             আমাদের অফিস ও শাখা সমূহ
           </h1>
-          <p className="mt-3 text-slate-600 text-xs sm:text-base font-light leading-relaxed">
-            উত্তরা ঢাকা হেড অফিস, কুষ্টিয়া শাখা, মধুখালী ফরিদপুর ও সিঙ্গাপুর আন্তর্জাতিক কার্যালয়
+          <p className="mt-2 text-slate-600 text-xs sm:text-sm font-normal leading-relaxed">
+            উত্তরা ঢাকা হেড অফিস, কুষ্টিয়া শাখা, ফরিদপুর আঞ্চলিক ও সিঙ্গাপুর আন্তর্জাতিক কার্যালয়
           </p>
         </motion.div>
 
