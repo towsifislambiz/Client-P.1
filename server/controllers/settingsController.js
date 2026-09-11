@@ -3,35 +3,46 @@
 
 import dataService from "../services/dataService.js";
 
-export const updateCredentials = (req, res, next) => {
+export const updateCredentials = async (req, res, next) => {
   try {
-    const { email, newPassword, confirmPassword } = req.body;
+    const { username, email, name, avatar, currentPassword, newPassword, confirmPassword } = req.body;
+    const admin = dataService.getAdmin();
 
-    if (newPassword && newPassword.length < 6) {
-      return res.status(400).json({
-        success: false,
-        message: "নতুন পাসওয়ার্ড কমপক্ষে ৬ অক্ষরের হতে হবে (Password must be at least 6 characters)"
-      });
+    if (newPassword) {
+      if (newPassword.length < 6) {
+        return res.status(400).json({
+          success: false,
+          message: "নতুন পাসওয়ার্ড কমপক্ষে ৬ অক্ষরের হতে হবে (Password must be at least 6 characters)"
+        });
+      }
+
+      if (confirmPassword && newPassword !== confirmPassword) {
+        return res.status(400).json({
+          success: false,
+          message: "নতুন পাসওয়ার্ড ও কনফার্ম পাসওয়ার্ড মেলেনি (Passwords do not match)"
+        });
+      }
     }
 
-    if (newPassword && newPassword !== confirmPassword) {
-      return res.status(400).json({
-        success: false,
-        message: "নতুন পাসওয়ার্ড ও কনফার্ম পাসওয়ার্ড মেলেনি (Passwords do not match)"
-      });
-    }
-
-    const updated = dataService.updateAdminCredentials(email, newPassword);
+    const updated = dataService.updateAdminCredentials({
+      username: username || email,
+      email: email || username,
+      name,
+      avatar,
+      newPassword
+    });
 
     res.status(200).json({
       success: true,
-      message: "অ্যাডমিন ক্রেডেনশিয়াল সফলভাবে পরিবর্তন করা হয়েছে",
+      message: "অ্যাডমিন ক্রেডেনশিয়াল ও প্রোফাইল সফলভাবে পরিবর্তন করা হয়েছে",
+      admin: updated,
       data: updated
     });
   } catch (err) {
     next(err);
   }
 };
+
 
 export const listBackups = (req, res, next) => {
   try {
@@ -173,6 +184,46 @@ export const updatePayment = (req, res, next) => {
       success: true,
       message: "পেমেন্ট স্ট্যাটাস আপডেট হয়েছে",
       data: pay
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+
+// ===================== AD POPUP CONTROLLER =====================
+export const getAdPopup = (req, res, next) => {
+  try {
+    const ad = dataService.getAdPopup();
+    res.status(200).json({
+      success: true,
+      data: ad
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const updateAdPopup = (req, res, next) => {
+  try {
+    const updated = dataService.updateAdPopup(req.body);
+    res.status(200).json({
+      success: true,
+      message: "বিজ্ঞাপন পপআপ সেটিংস সফলভাবে আপডেট করা হয়েছে",
+      data: updated
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const resetAdPopup = (req, res, next) => {
+  try {
+    const reset = dataService.resetAdPopup();
+    res.status(200).json({
+      success: true,
+      message: "বিজ্ঞাপন পপআপ ডিফল্ট অবস্থায় রিসেট করা হয়েছে",
+      data: reset
     });
   } catch (err) {
     next(err);

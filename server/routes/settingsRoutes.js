@@ -10,7 +10,10 @@ import {
   updateInquiry,
   getPayments,
   createPayment,
-  updatePayment
+  updatePayment,
+  getAdPopup,
+  updateAdPopup,
+  resetAdPopup
 } from "../controllers/settingsController.js";
 import { authenticateAdmin } from "../middleware/authMiddleware.js";
 import { inquiryGuard, paymentGuard } from "../security/routeGuards.js";
@@ -34,5 +37,11 @@ router.put("/inquiries/:id", authenticateAdmin, updateInquiry);
 router.get("/payments", authenticateAdmin, getPayments);
 router.post("/payments", paymentGuard, createPayment); // Public submission with replay & flood guard
 router.put("/payments/:id", authenticateAdmin, updatePayment);
+
+
+// Ad Popup Management
+router.get("/ad-popup", getAdPopup);
+router.put("/ad-popup", authenticateAdmin, updateAdPopup);
+router.post("/ad-popup/reset", authenticateAdmin, resetAdPopup);
 
 export default router;

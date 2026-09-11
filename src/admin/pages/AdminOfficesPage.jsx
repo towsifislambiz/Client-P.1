@@ -1,7 +1,7 @@
 // src/admin/pages/AdminOfficesPage.jsx
 // Offices and Global Site Contact Management
 
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   Building2,
   Phone,
@@ -17,7 +17,10 @@ import {
   ExternalLink,
   MessageCircle,
   Eye,
-  EyeOff
+  EyeOff,
+  UserCheck,
+  Upload,
+  Sparkles
 } from "lucide-react";
 import { useSiteData } from "../../context/SiteDataContext";
 import ToastNotification from "../components/ToastNotification";
@@ -49,9 +52,98 @@ export default function AdminOfficesPage() {
     mainEmail: contact.mainEmail || "linkbd86@gmail.com",
     supportEmail: contact.supportEmail || "linkbd86@gmail.com",
     website: contact.website || "www.linkbd.net",
+    billingPortalUrl: contact.billingPortalUrl || "https://client.linkbd.net/pay.php?c=1255",
+    billingHelpline: contact.billingHelpline || "01995648616",
     wazeLink: contact.wazeLink || ""
   });
   const [isSavingContact, setIsSavingContact] = useState(false);
+
+  // Owner Card Form State
+  const [ownerForm, setOwnerForm] = useState({
+    ownerName: contact.ownerName || "Md. Hasan Mahmud",
+    ownerTitle: contact.ownerTitle || "Owner, Link BD / Vison Broadband",
+    ownerQuote: contact.ownerQuote || "আমরা গ্রাহকদের নিরবচ্ছিন্ন ও ঝামেলামুক্ত ইন্টারনেট সেবা প্রদানে অঙ্গীকারবদ্ধ। সঠিক গতি এবং নির্ভরযোগ্য ২৪/৭ সাপোর্ট আমাদের মূল লক্ষ্য।",
+    ownerPhoto: contact.ownerPhoto || "/assets/owner-info.png",
+    ownerPhone: contact.ownerPhone || contact.mainHotline || "+8801995-648616",
+    ownerEmail: contact.ownerEmail || contact.mainEmail || "linkbd86@gmail.com"
+  });
+  const [isSavingOwner, setIsSavingOwner] = useState(false);
+  const [ownerPhotoPreview, setOwnerPhotoPreview] = useState(null);
+  const ownerPhotoInputRef = useRef(null);
+
+  useEffect(() => {
+    setContactForm({
+      mainHotline: contact.mainHotline || "+8801995-648616",
+      supportHotline: contact.supportHotline || "+8801897-785024",
+      whatsapp: contact.whatsapp || "+8801995648616",
+      mainEmail: contact.mainEmail || "linkbd86@gmail.com",
+      supportEmail: contact.supportEmail || "linkbd86@gmail.com",
+      website: contact.website || "www.linkbd.net",
+      billingPortalUrl: contact.billingPortalUrl || "https://client.linkbd.net/pay.php?c=1255",
+      billingHelpline: contact.billingHelpline || "01995648616",
+      wazeLink: contact.wazeLink || ""
+    });
+    setOwnerForm({
+      ownerName: contact.ownerName || "Md. Hasan Mahmud",
+      ownerTitle: contact.ownerTitle || "Owner, Link BD / Vison Broadband",
+      ownerQuote: contact.ownerQuote || "আমরা গ্রাহকদের নিরবচ্ছিন্ন ও ঝামেলামুক্ত ইন্টারনেট সেবা প্রদানে অঙ্গীকারবদ্ধ। সঠিক গতি এবং নির্ভরযোগ্য ২৪/৭ সাপোর্ট আমাদের মূল লক্ষ্য।",
+      ownerPhoto: contact.ownerPhoto || "/assets/owner-info.png",
+      ownerPhone: contact.ownerPhone || contact.mainHotline || "+8801995-648616",
+      ownerEmail: contact.ownerEmail || contact.mainEmail || "linkbd86@gmail.com"
+    });
+  }, [contact]);
+
+  const handlePhotoSelect = (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    if (file.size > 5 * 1024 * 1024) {
+      setToast({ type: "error", title: "ফাইল অত্যন্ত বড়", message: "ছবির আকার সর্বোচ্চ ৫ মেগাবাইট হতে পারে।" });
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      const dataUrl = reader.result;
+      setOwnerPhotoPreview(dataUrl);
+      setOwnerForm(prev => ({ ...prev, ownerPhoto: dataUrl }));
+    };
+    reader.readAsDataURL(file);
+  };
+
+  const handleResetOwnerPhoto = () => {
+    setOwnerPhotoPreview(null);
+    setOwnerForm(prev => ({ ...prev, ownerPhoto: "/assets/owner-info.png" }));
+    setToast({
+      type: "success",
+      title: "ডিফল্ট ছবি সেট হয়েছে",
+      message: "সংরক্ষণ করতে নিচের বাটনে চাপুন।"
+    });
+  };
+
+  const handleSaveOwner = async (e) => {
+    e.preventDefault();
+    if (!ownerForm.ownerName.trim()) {
+      setToast({ type: "error", title: "নাম আবশ্যক", message: "প্রতিষ্ঠাতা/মালিকের নাম লিখুন।" });
+      return;
+    }
+    setIsSavingOwner(true);
+    try {
+      await updateGlobalContact({
+        ...contact,
+        ...ownerForm
+      });
+      setToast({
+        type: "success",
+        title: "মালিকের তথ্য আপডেট হয়েছে",
+        message: "অফিস পেজ ও হোম পেজে ওনার কার্ডটি সফলভাবে আপডেট হয়েছে।"
+      });
+    } catch (err) {
+      setToast({ type: "error", title: "সংরক্ষণ ব্যর্থ", message: err.message });
+    } finally {
+      setIsSavingOwner(false);
+    }
+  };
 
   // Office Form
   const [officeForm, setOfficeForm] = useState({
@@ -285,6 +377,30 @@ export default function AdminOfficesPage() {
             />
           </div>
 
+          <div>
+            <label className="block text-xs font-semibold text-slate-300 mb-1">
+              অনলাইন বিল পেমেন্ট লিঙ্ক (Billing Portal URL)
+            </label>
+            <input
+              type="url"
+              value={contactForm.billingPortalUrl || ""}
+              onChange={(e) => setContactForm({ ...contactForm, billingPortalUrl: e.target.value })}
+              className="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-xs text-white focus:outline-none focus:border-blue-500 font-mono"
+            />
+          </div>
+
+          <div>
+            <label className="block text-xs font-semibold text-slate-300 mb-1">
+              বিলিং হেল্পলাইন নম্বর
+            </label>
+            <input
+              type="text"
+              value={contactForm.billingHelpline || ""}
+              onChange={(e) => setContactForm({ ...contactForm, billingHelpline: e.target.value })}
+              className="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-xs text-white focus:outline-none focus:border-blue-500 font-mono"
+            />
+          </div>
+
           <div className="flex items-end">
             <button
               type="submit"
@@ -302,7 +418,202 @@ export default function AdminOfficesPage() {
         </form>
       </div>
 
-      {/* SECTION 2: OFFICES LIST */}
+      {/* SECTION 2: OWNER PROFILE CARD (মালিক ও প্রতিষ্ঠাতা পরিচিতি) */}
+      <div className="bg-slate-900/90 border border-slate-800 rounded-3xl p-6 shadow-xl">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-slate-800 mb-6">
+          <div>
+            <h2 className="text-base sm:text-lg font-bold text-white flex items-center gap-2">
+              <UserCheck className="w-5 h-5 text-cyan-400" />
+              প্রতিষ্ঠাতা ও মালিক পরিচিতি কার্ড (Owner Profile Card)
+            </h2>
+            <p className="text-xs text-slate-400 mt-0.5">
+              অফিস পেজ ও হোম পেজে প্রদর্শিত ওনার কার্ডের নাম, ছবি/ভিজিটিং কার্ড, বাণী ও যোগাযোগ নম্বর পরিবর্তন করুন।
+            </p>
+          </div>
+          <button
+            type="button"
+            onClick={handleResetOwnerPhoto}
+            className="self-start sm:self-auto text-[11px] font-semibold text-slate-300 hover:text-white px-3.5 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 transition flex items-center gap-1.5 cursor-pointer border border-slate-700 shadow-sm"
+          >
+            <RotateCcw className="w-3.5 h-3.5 text-slate-400" />
+            ডিফল্ট ছবি ফিরিয়ে আনুন
+          </button>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+          {/* Form Fields (7 Columns) */}
+          <form onSubmit={handleSaveOwner} className="lg:col-span-7 space-y-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label className="block text-xs font-semibold text-slate-300 mb-1">
+                  মালিকের পূর্ণ নাম (Owner Name) *
+                </label>
+                <input
+                  type="text"
+                  required
+                  value={ownerForm.ownerName}
+                  onChange={(e) => setOwnerForm({ ...ownerForm, ownerName: e.target.value })}
+                  className="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs text-white focus:outline-none focus:border-cyan-500"
+                  placeholder="Md. Hasan Mahmud"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-semibold text-slate-300 mb-1">
+                  পদবী / টাইটেল (Designation)
+                </label>
+                <input
+                  type="text"
+                  value={ownerForm.ownerTitle}
+                  onChange={(e) => setOwnerForm({ ...ownerForm, ownerTitle: e.target.value })}
+                  className="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs text-white focus:outline-none focus:border-cyan-500"
+                  placeholder="Owner, Link BD / Vison Broadband"
+                />
+              </div>
+            </div>
+
+            {/* Photo Upload Area */}
+            <div>
+              <label className="block text-xs font-semibold text-slate-300 mb-1.5">
+                ভিজিটিং কার্ড বা ছবি (Visiting Card / Photo Upload)
+              </label>
+              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+                <input
+                  type="file"
+                  ref={ownerPhotoInputRef}
+                  onChange={handlePhotoSelect}
+                  accept="image/png, image/jpeg, image/webp"
+                  className="hidden"
+                />
+                <button
+                  type="button"
+                  onClick={() => ownerPhotoInputRef.current?.click()}
+                  className="px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-xs font-bold text-cyan-300 transition flex items-center justify-center gap-2 cursor-pointer shadow-sm"
+                >
+                  <Upload className="w-4 h-4" />
+                  নতুন ছবি / কার্ড আপলোড করুন
+                </button>
+                <span className="text-[11px] text-slate-400 text-center sm:text-left">
+                  PNG, JPG বা WebP ফরম্যাট (সর্বোচ্চ 5MB)
+                </span>
+              </div>
+            </div>
+
+            {/* Statement / Quote Textarea */}
+            <div>
+              <label className="block text-xs font-semibold text-slate-300 mb-1">
+                মালিকের বক্তব্য / অঙ্গীকার (Owner Statement & Quote)
+              </label>
+              <textarea
+                rows="3"
+                value={ownerForm.ownerQuote}
+                onChange={(e) => setOwnerForm({ ...ownerForm, ownerQuote: e.target.value })}
+                className="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs text-white focus:outline-none focus:border-cyan-500 leading-relaxed resize-none"
+                placeholder="গ্রাহকদের জন্য আপনার অঙ্গীকার বা বার্তা লিখুন..."
+              />
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label className="block text-xs font-semibold text-slate-300 mb-1">
+                  সরাসরি যোগাযোগ নম্বর (Contact Phone)
+                </label>
+                <input
+                  type="text"
+                  value={ownerForm.ownerPhone}
+                  onChange={(e) => setOwnerForm({ ...ownerForm, ownerPhone: e.target.value })}
+                  className="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs text-white focus:outline-none focus:border-cyan-500"
+                  placeholder="+8801995-648616"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-semibold text-slate-300 mb-1">
+                  ব্যক্তিগত / অফিশিয়াল ইমেইল (Contact Email)
+                </label>
+                <input
+                  type="email"
+                  value={ownerForm.ownerEmail}
+                  onChange={(e) => setOwnerForm({ ...ownerForm, ownerEmail: e.target.value })}
+                  className="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs text-white focus:outline-none focus:border-cyan-500"
+                  placeholder="linkbd86@gmail.com"
+                />
+              </div>
+            </div>
+
+            <div className="pt-2">
+              <button
+                type="submit"
+                disabled={isSavingOwner}
+                className="w-full sm:w-auto px-6 py-3 rounded-xl text-xs font-bold bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-500 hover:to-cyan-400 text-white shadow-lg shadow-blue-500/25 transition flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
+              >
+                {isSavingOwner ? (
+                  <span className="w-4 h-4 border-2 border-white/40 border-t-white rounded-full animate-spin" />
+                ) : (
+                  <Check className="w-4 h-4" />
+                )}
+                মালিকের তথ্য ও কার্ড সংরক্ষণ করুন
+              </button>
+            </div>
+          </form>
+
+          {/* Live Preview Column (5 Columns) */}
+          <div className="lg:col-span-5 bg-slate-950/80 border border-slate-800/80 rounded-2xl p-4 sm:p-5 shadow-inner">
+            <div className="flex items-center justify-between mb-3 pb-2 border-b border-slate-800">
+              <span className="text-[11px] font-bold uppercase tracking-wider text-cyan-400 flex items-center gap-1.5">
+                <Sparkles className="w-3.5 h-3.5 text-cyan-400" />
+                লাইভ প্রিভিউ (ওয়েবসাইটে যেমন দেখাবে)
+              </span>
+              <span className="text-[10px] text-slate-500 font-mono">Live Card Preview</span>
+            </div>
+
+            {/* Visual Card Replica */}
+            <div className="bg-white text-slate-900 rounded-3xl p-5 sm:p-6 border border-slate-200 shadow-xl select-none">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-11 h-11 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center shadow-inner shrink-0">
+                  <UserCheck className="w-6 h-6" />
+                </div>
+                <div>
+                  <h3 className="font-extrabold text-slate-900 text-base sm:text-lg leading-tight">
+                    {ownerForm.ownerName || "Md. Hasan Mahmud"}
+                  </h3>
+                  <p className="text-xs font-bold text-blue-600 mt-0.5">
+                    {ownerForm.ownerTitle || "Owner, Link BD / Vison Broadband"}
+                  </p>
+                </div>
+              </div>
+
+              <div className="rounded-2xl overflow-hidden border border-slate-200 mb-3 bg-slate-50 shadow-sm">
+                <img
+                  src={ownerPhotoPreview || ownerForm.ownerPhoto || "/assets/owner-info.png"}
+                  alt="Owner Info Preview"
+                  className="w-full h-auto object-cover max-h-[190px]"
+                  onError={(e) => {
+                    e.currentTarget.src = "/assets/owner-info.png";
+                  }}
+                />
+              </div>
+
+              <div className="p-3 rounded-2xl bg-blue-50/60 border border-blue-100/80 text-[11px] text-slate-700 leading-relaxed font-medium mb-4">
+                "{ownerForm.ownerQuote || "আমরা গ্রাহকদের নিরবচ্ছিন্ন ও ঝামেলামুক্ত ইন্টারনেট সেবা প্রদানে অঙ্গীকারবদ্ধ। সঠিক গতি এবং নির্ভরযোগ্য ২৪/৭ সাপোর্ট আমাদের মূল লক্ষ্য।"}"
+              </div>
+
+              <div className="pt-3 border-t border-slate-100 space-y-2 text-xs text-slate-700">
+                <div className="flex items-center gap-2">
+                  <Phone className="w-3.5 h-3.5 text-blue-600 shrink-0" />
+                  <span className="font-semibold text-slate-800">{ownerForm.ownerPhone || "+8801995-648616"}</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Mail className="w-3.5 h-3.5 text-blue-600 shrink-0" />
+                  <span className="font-semibold text-slate-800 truncate">{ownerForm.ownerEmail || "linkbd86@gmail.com"}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* SECTION 3: OFFICES LIST */}
       <div>
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-base sm:text-lg font-bold text-white flex items-center gap-2">

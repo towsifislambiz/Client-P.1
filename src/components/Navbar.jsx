@@ -140,7 +140,7 @@ export default function Navbar({ onOpenConnectionModal }) {
             </Link>
 
             {/* Desktop Navigation Links */}
-            <nav className="hidden lg:flex items-center gap-1 xl:gap-2 font-medium text-[13px] xl:text-[14px]">
+            <nav className="hidden lg:flex items-center gap-1 xl:gap-1.5 p-1.5 rounded-2xl bg-gradient-to-r from-blue-50/90 via-slate-100/95 to-cyan-50/90 border border-blue-200/70 shadow-sm backdrop-blur-md">
               {navLinks.map((link) => {
                 const isActive = location.pathname === link.to;
                 return (
@@ -148,16 +148,16 @@ export default function Navbar({ onOpenConnectionModal }) {
                     key={link.to}
                     to={link.to}
                     onClick={(e) => handleNavLinkClick(e, link.to)}
-                    className={`relative px-3 py-1.5 rounded-lg transition-colors whitespace-nowrap cursor-pointer ${
+                    className={`relative px-3 xl:px-3.5 py-1.5 rounded-xl transition-all duration-200 whitespace-nowrap cursor-pointer text-[13.5px] xl:text-[14.5px] font-bold ${
                       isActive
-                        ? "text-blue-600 font-bold"
-                        : "text-slate-700 hover:text-blue-600 hover:bg-slate-100/60"
+                        ? "text-white font-extrabold"
+                        : "text-slate-800 hover:text-blue-700 hover:bg-white/90"
                     }`}
                   >
                     {isActive && (
                       <motion.div
                         layoutId="activeNavPill"
-                        className="absolute inset-0 bg-blue-50 border border-blue-200/60 rounded-lg -z-10 shadow-sm"
+                        className="absolute inset-0 bg-gradient-to-r from-blue-600 to-cyan-600 rounded-xl shadow-md shadow-blue-500/25 -z-10"
                         transition={{ type: "spring", stiffness: 380, damping: 30 }}
                       />
                     )}
@@ -223,10 +223,10 @@ export default function Navbar({ onOpenConnectionModal }) {
                       handleNavLinkClick(e, link.to);
                       setMobileMenuOpen(false);
                     }}
-                    className={`block px-4 py-2.5 rounded-xl text-sm font-bold transition-colors ${
+                    className={`block px-4 py-2.5 rounded-xl text-sm font-bold transition-all ${
                       isActive
-                        ? "bg-blue-50 text-blue-600 border border-blue-200"
-                        : "text-slate-700 hover:bg-slate-50"
+                        ? "bg-gradient-to-r from-blue-600 to-cyan-600 text-white shadow-md shadow-blue-500/25"
+                        : "text-slate-800 hover:bg-slate-100/80"
                     }`}
                   >
                     {link.label}

@@ -55,7 +55,7 @@ export default function PackagesPage({ onSelectPackage }) {
             আল্ট্রা-হাইস্পিড ফাইবার প্যাকেজসমূহ
           </div>
           <h1 className="text-2xl sm:text-4xl lg:text-5xl font-black tracking-tight text-white leading-tight">
-            আপনার জীবন ও কাজের জন্য <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-400 to-indigo-400">সেরা ব্রডব্যান্ড</span> প্যাকেজ
+            আপনার বাসা ও অফিসের জন্য <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-400 to-indigo-400">সেরা ব্রডব্যান্ড</span> প্যাকেজ
           </h1>
           <p className="mt-3 text-slate-300 text-xs sm:text-base font-light leading-relaxed">
             ৫০ Mbps থেকে ৩০০ Mbps পর্যন্ত নিরবচ্ছিন্ন অপটিক্যাল ফাইবার, রিয়েল BDIX ও 1:8 কন্টেনশন রেশিও
@@ -240,8 +240,8 @@ export default function PackagesPage({ onSelectPackage }) {
 
                   {/* Speed Box */}
                   <div className={`p-4 rounded-2xl bg-gradient-to-r ${pkg.accentColor} text-white text-center shadow-lg my-4`}>
-                    <div className="text-4xl font-black">{pkg.speed}</div>
-                    <div className="text-xs font-bold uppercase tracking-wider text-white/90">{pkg.speedUnit} High-Speed Fiber</div>
+                    <div className="text-3xl sm:text-4xl font-black">{pkg.speed}/{pkg.speedUnit}</div>
+                    <div className="text-xs font-bold uppercase tracking-wider text-white/90 mt-1">High-Speed Internet</div>
                   </div>
 
                   {/* Price */}

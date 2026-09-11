@@ -48,16 +48,18 @@ export default function OfficesPage() {
                 </div>
                 <div>
                   <h3 className="font-extrabold text-slate-900 text-lg sm:text-xl">
-                    {contact?.owner || companyInfo?.owner || "Md. Hasan Mahmud"}
+                    {contact?.ownerName || contact?.owner || "Md. Hasan Mahmud"}
                   </h3>
-                  <p className="text-xs font-bold text-blue-600">Owner, Link BD / Vison Broadband</p>
+                  <p className="text-xs font-bold text-blue-600">
+                    {contact?.ownerTitle || "Owner, Link BD / Vison Broadband"}
+                  </p>
                 </div>
               </div>
 
               {/* Owner Screenshot Card */}
               <div className="rounded-xl overflow-hidden border border-slate-200 mb-4 bg-slate-50 shadow-sm">
                 <img
-                  src={imageMap["head_office_img"]?.currentUrl || "/assets/owner-info.png"}
+                  src={contact?.ownerPhoto || imageMap["head_office_img"]?.currentUrl || "/assets/owner-info.png"}
                   alt="Head Office Credentials"
                   className="w-full h-auto object-cover"
                   onError={(e) => {
@@ -67,18 +69,18 @@ export default function OfficesPage() {
               </div>
 
               <div className="p-3.5 rounded-xl bg-blue-50/50 border border-blue-100 text-xs text-slate-700 leading-relaxed font-medium">
-                "আমরা গ্রাহকদের নিরবচ্ছিন্ন ও ঝামেলামুক্ত ইন্টারনেট সেবা প্রদানে অঙ্গীকারবদ্ধ। সঠিক গতি এবং নির্ভরযোগ্য ২৪/৭ সাপোর্ট আমাদের মূল লক্ষ্য।"
+                "{contact?.ownerQuote || "আমরা গ্রাহকদের নিরবচ্ছিন্ন ও ঝামেলামুক্ত ইন্টারনেট সেবা প্রদানে অঙ্গীকারবদ্ধ। সঠিক গতি এবং নির্ভরযোগ্য ২৪/৭ সাপোর্ট আমাদের মূল লক্ষ্য।"}"
               </div>
             </div>
 
             <div className="mt-5 pt-4 border-t border-slate-100 space-y-2.5 text-xs text-slate-700">
               <div className="flex items-center gap-2">
                 <Phone className="w-4 h-4 text-blue-600 shrink-0" />
-                <span className="font-semibold">{contact.mainHotline}</span>
+                <span className="font-semibold">{contact?.ownerPhone || contact?.mainHotline}</span>
               </div>
               <div className="flex items-center gap-2">
                 <Mail className="w-4 h-4 text-blue-600 shrink-0" />
-                <span className="font-semibold">{contact.mainEmail}</span>
+                <span className="font-semibold">{contact?.ownerEmail || contact?.mainEmail}</span>
               </div>
             </div>
           </motion.div>

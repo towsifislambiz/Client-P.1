@@ -9,6 +9,7 @@ import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import ConnectionModal from "./components/ConnectionModal";
 import WhatsAppWidget from "./components/WhatsAppWidget";
+import PromoModal from "./components/PromoModal";
 
 import HomePage from "./pages/HomePage";
 import PackagesPage from "./pages/PackagesPage";
@@ -114,6 +115,7 @@ function AppContent() {
         />
 
         <WhatsAppWidget />
+        <PromoModal onOpenConnectionModal={handleOpenConnectionModal} />
       </div>
     </SmoothScroll>
   );

@@ -1,22 +1,12 @@
 import React from "react";
-import { MessageCircle, PhoneCall } from "lucide-react";
+import { MessageCircle } from "lucide-react";
 import { useSiteData } from "../context/SiteDataContext";
 
 export default function WhatsAppWidget() {
   const { contact } = useSiteData();
 
   return (
-    <div className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-40 flex flex-col items-end gap-3.5 sm:gap-5 pointer-events-auto">
-      {/* Direct Phone Dial */}
-      <a
-        href={`tel:${contact.mainHotline}`}
-        className="p-3 sm:p-3.5 rounded-full bg-blue-600 hover:bg-blue-700 text-white shadow-xl transition-all duration-300 hover:scale-110 active:scale-95 flex items-center justify-center border-2 border-white/30"
-        title="২৪/৭ হটলাইনে কল করুন"
-        aria-label="Direct Phone Dial"
-      >
-        <PhoneCall className="w-4 h-4 sm:w-5 sm:h-5" />
-      </a>
-
+    <div className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-40 flex flex-col items-end pointer-events-auto">
       {/* WhatsApp Click to Chat with safe bounce clearance */}
       <a
         href={`https://wa.me/${contact.whatsapp}?text=${encodeURIComponent("হ্যালো Link BD, আমি নতুন ইন্টারনেট সংযোগ সম্পর্কে জানতে চাই।")}`}

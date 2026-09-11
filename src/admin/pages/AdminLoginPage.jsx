@@ -102,7 +102,7 @@ export default function AdminLoginPage() {
                   type="text"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder="admin@linkbd.net"
+                  placeholder="আপনার ইমেইল বা ইউজারনেম"
                   autoComplete="username"
                   required
                   className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-sm text-white placeholder-slate-600 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition"
@@ -157,13 +157,6 @@ export default function AdminLoginPage() {
               )}
             </button>
           </form>
-
-          {/* Setup Credential Hint */}
-          <div className="mt-6 pt-4 border-t border-slate-800 text-center">
-            <p className="text-[11px] text-slate-500">
-              ডিফল্ট অ্যাডমিন ক্রেডেনশিয়াল: <code className="text-cyan-400 font-mono">admin@linkbd.net</code> / <code className="text-cyan-400 font-mono">admin123456</code>
-            </p>
-          </div>
         </div>
 
         {/* Security Badge */}

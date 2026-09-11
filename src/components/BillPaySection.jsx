@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import confetti from "canvas-confetti";
-import { CreditCard, ShieldCheck, CheckCircle2, Phone, Download } from "lucide-react";
+import { CreditCard, ShieldCheck, CheckCircle2, Phone, Download, ExternalLink } from "lucide-react";
 import { companyInfo } from "../data/ispData";
 import { useSiteData } from "../context/SiteDataContext";
 
@@ -126,11 +126,21 @@ export default function BillPaySection() {
               </div>
             </div>
 
-            <div className="p-5 bg-white/10 rounded-2xl border border-white/10 text-xs space-y-1 text-slate-300 backdrop-blur-md">
+            <div className="p-5 bg-white/10 rounded-2xl border border-white/10 text-xs space-y-2 text-slate-300 backdrop-blur-md">
               <p className="font-semibold text-white">বিল সংক্রান্ত হেল্পলাইন:</p>
               <p className="text-cyan-300 text-base font-bold">{contact?.mainHotline || companyInfo.hotline1}</p>
               <p className="text-[11px] text-slate-400">প্রতিদিন সকাল ৮:০০ টা থেকে রাত ১২:০০ টা পর্যন্ত</p>
             </div>
+
+            <a
+              href={contact?.billingPortalUrl || "https://client.linkbd.net/pay.php?c=1255"}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-full py-3.5 px-4 bg-gradient-to-r from-cyan-400 via-blue-500 to-indigo-600 hover:from-cyan-300 hover:to-blue-400 text-slate-950 font-black text-xs sm:text-sm rounded-2xl shadow-lg transition flex items-center justify-center gap-2 cursor-pointer text-center"
+            >
+              <span>অফিসিয়াল অনলাইন বিলিং পোর্টালে যান</span>
+              <ExternalLink className="w-4 h-4" />
+            </a>
           </motion.div>
 
           {/* Payment Form & Animated Receipt */}

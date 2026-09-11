@@ -4,7 +4,7 @@
 // Real-Time Cross-Tab & Cross-Device Synchronization Engine
 
 import React, { createContext, useContext, useState, useEffect, useCallback, useMemo } from "react";
-import { companyInfo as defaultCompanyInfo, packages as defaultPackagesList } from "../data/ispData";
+import { companyInfo as defaultCompanyInfo, packages as defaultPackagesList, defaultServers as defaultServersList, defaultAdPopup } from "../data/ispData";
 
 const SiteDataContext = createContext(null);
 const BROADCAST_CHANNEL_NAME = "linkbd_realtime_sync";
@@ -82,18 +82,53 @@ export const SiteDataProvider = ({ children }) => {
     }
   });
 
+  const [servers, setServers] = useState(() => {
+    try {
+      const saved = localStorage.getItem("linkbd_custom_servers");
+      return saved ? JSON.parse(saved) : defaultServersList;
+    } catch {
+      return defaultServersList;
+    }
+  });
+
+  const [adPopup, setAdPopup] = useState(() => {
+    try {
+      const saved = localStorage.getItem("linkbd_custom_ad_popup");
+      return saved ? JSON.parse(saved) : (defaultAdPopup || {
+        id: "ad-popup-main",
+        isActive: true,
+        title: "Link BD স্পেশাল অফার ও মেগা ডিসকাউন্ট",
+        imageUrl: "/assets/promo-popup.svg",
+        targetUrl: "",
+        actionType: "connection_modal",
+        cooldownMinutes: 5,
+        showOnPages: "all"
+      });
+    } catch {
+      return defaultAdPopup;
+    }
+  });
+
   const [contact, setContact] = useState(() => {
     try {
       const saved = localStorage.getItem("linkbd_custom_contact");
       return saved ? JSON.parse(saved) : {
         companyName: defaultCompanyInfo.fullName,
         slogan: defaultCompanyInfo.slogan,
+        ownerName: defaultCompanyInfo.ownerName || "Md. Hasan Mahmud",
+        ownerTitle: defaultCompanyInfo.ownerTitle || "Owner, Link BD / Vison Broadband",
+        ownerQuote: defaultCompanyInfo.ownerQuote || "আমরা গ্রাহকদের নিরবচ্ছিন্ন ও ঝামেলামুক্ত ইন্টারনেট সেবা প্রদানে অঙ্গীকারবদ্ধ। সঠিক গতি এবং নির্ভরযোগ্য ২৪/৭ সাপোর্ট আমাদের মূল লক্ষ্য।",
+        ownerPhoto: defaultCompanyInfo.ownerPhoto || "/assets/owner-info.png",
+        ownerPhone: defaultCompanyInfo.ownerPhone || defaultCompanyInfo.hotline1,
+        ownerEmail: defaultCompanyInfo.ownerEmail || defaultCompanyInfo.email1,
         mainHotline: defaultCompanyInfo.hotline1,
         supportHotline: defaultCompanyInfo.hotline2,
         whatsapp: defaultCompanyInfo.whatsapp,
         mainEmail: defaultCompanyInfo.email1,
         supportEmail: defaultCompanyInfo.email1,
         website: defaultCompanyInfo.website,
+        billingPortalUrl: defaultCompanyInfo.billingPortalUrl || "https://client.linkbd.net/pay.php?c=1255",
+        billingHelpline: defaultCompanyInfo.billingHelpline || "01995648616",
         wazeLink: defaultCompanyInfo.wazeLink,
         operationalStatus: "Operational"
       };
@@ -101,12 +136,20 @@ export const SiteDataProvider = ({ children }) => {
       return {
         companyName: defaultCompanyInfo.fullName,
         slogan: defaultCompanyInfo.slogan,
+        ownerName: defaultCompanyInfo.ownerName || "Md. Hasan Mahmud",
+        ownerTitle: defaultCompanyInfo.ownerTitle || "Owner, Link BD / Vison Broadband",
+        ownerQuote: defaultCompanyInfo.ownerQuote || "আমরা গ্রাহকদের নিরবচ্ছিন্ন ও ঝামেলামুক্ত ইন্টারনেট সেবা প্রদানে অঙ্গীকারবদ্ধ। সঠিক গতি এবং নির্ভরযোগ্য ২৪/৭ সাপোর্ট আমাদের মূল লক্ষ্য।",
+        ownerPhoto: defaultCompanyInfo.ownerPhoto || "/assets/owner-info.png",
+        ownerPhone: defaultCompanyInfo.ownerPhone || defaultCompanyInfo.hotline1,
+        ownerEmail: defaultCompanyInfo.ownerEmail || defaultCompanyInfo.email1,
         mainHotline: defaultCompanyInfo.hotline1,
         supportHotline: defaultCompanyInfo.hotline2,
         whatsapp: defaultCompanyInfo.whatsapp,
         mainEmail: defaultCompanyInfo.email1,
         supportEmail: defaultCompanyInfo.email1,
         website: defaultCompanyInfo.website,
+        billingPortalUrl: defaultCompanyInfo.billingPortalUrl || "https://client.linkbd.net/pay.php?c=1255",
+        billingHelpline: defaultCompanyInfo.billingHelpline || "01995648616",
         wazeLink: defaultCompanyInfo.wazeLink,
         operationalStatus: "Operational"
       };
@@ -172,6 +215,10 @@ export const SiteDataProvider = ({ children }) => {
       setImages(data);
     } else if (entity === "contact" && data) {
       setContact(data);
+    } else if (entity === "servers" && Array.isArray(data)) {
+      setServers(data);
+    } else if (entity === "adPopup" && data) {
+      setAdPopup(data);
     }
   }, []);
 
@@ -235,6 +282,12 @@ export const SiteDataProvider = ({ children }) => {
                 });
               }
             }
+          }
+
+          // Servers Reconciliation
+          if (d.servers && Array.isArray(d.servers) && d.servers.length > 0) {
+            setServers(d.servers);
+            localStorage.setItem("linkbd_custom_servers", JSON.stringify(d.servers));
           }
 
           // 3. Branding Reconciliation
@@ -332,6 +385,9 @@ export const SiteDataProvider = ({ children }) => {
         } else if (e.key === "linkbd_custom_contact") {
           const parsed = JSON.parse(e.newValue);
           setContact(parsed);
+        } else if (e.key === "linkbd_custom_servers") {
+          const parsed = JSON.parse(e.newValue);
+          setServers(parsed);
         }
       } catch (err) {
         console.warn("[SiteData] Storage sync error:", err);
@@ -400,12 +456,8 @@ export const SiteDataProvider = ({ children }) => {
   const login = async (email, password) => {
     try {
       const cleanEmail = (email || "").trim().toLowerCase();
-      const isDefaultCreds = (
-        (cleanEmail === "admin@linkbd.net" || cleanEmail === "admin") &&
-        password === "admin123456"
-      );
 
-      // 1. Try Live Backend Login
+      // 1. Primary: Live Secure Backend Authentication
       try {
         const res = await fetch("/api/auth/login", {
           method: "POST",
@@ -423,30 +475,43 @@ export const SiteDataProvider = ({ children }) => {
             localStorage.setItem("linkbd_admin_user", JSON.stringify(data.admin));
             await fetchSiteData();
             return { success: true, message: data.message };
-          } else if (!isDefaultCreds) {
+          } else {
             return { success: false, message: data.message || "ভুল ইমেইল অথবা পাসওয়ার্ড" };
           }
         }
       } catch (netErr) {
-        console.warn("[SiteDataContext] Backend login endpoint unreachable, attempting failover:", netErr.message);
+        console.warn("[SiteDataContext] Backend login endpoint unreachable, checking client session:", netErr.message);
       }
 
-      // 2. Resilient Failover for Cloud / Vercel Cold Starts
-      if (isDefaultCreds) {
-        const fallbackToken = "admin_session_" + Date.now();
-        const fallbackAdmin = {
-          email: "admin@linkbd.net",
-          role: "admin",
-          lastLogin: new Date().toISOString()
-        };
-        setToken(fallbackToken);
-        setAdminUser(fallbackAdmin);
-        localStorage.setItem("linkbd_admin_token", fallbackToken);
-        localStorage.setItem("linkbd_admin_user", JSON.stringify(fallbackAdmin));
-        return { success: true, message: "সফলভাবে লগইন হয়েছে (Login successful)" };
+      // 2. Resilient Failover for Offline / Vercel Static Cold Starts
+      const customCreds = (() => {
+        try {
+          return JSON.parse(localStorage.getItem("linkbd_admin_credentials"));
+        } catch {
+          return null;
+        }
+      })();
+
+      if (customCreds && customCreds.username && customCreds.password) {
+        const targetUsername = customCreds.username.toLowerCase();
+        if (cleanEmail === targetUsername && password === customCreds.password) {
+          const fallbackToken = "admin_session_" + Date.now();
+          const fallbackAdmin = {
+            username: customCreds.username,
+            email: customCreds.email || customCreds.username,
+            name: customCreds.name || "Administrator",
+            role: "Super Administrator",
+            lastLogin: new Date().toISOString()
+          };
+          setToken(fallbackToken);
+          setAdminUser(fallbackAdmin);
+          localStorage.setItem("linkbd_admin_token", fallbackToken);
+          localStorage.setItem("linkbd_admin_user", JSON.stringify(fallbackAdmin));
+          return { success: true, message: "সফলভাবে লগইন হয়েছে (Login successful)" };
+        }
       }
 
-      return { success: false, message: "ভুল ইমেইল অথবা পাসওয়ার্ড (Invalid credentials)" };
+      return { success: false, message: "ভুল ইউজারনেম অথবা পাসওয়ার্ড (Invalid credentials)" };
     } catch (err) {
       return { success: false, message: err.message || "লগইন করতে সমস্যা হচ্ছে। আবার চেষ্টা করুন।" };
     }
@@ -816,6 +881,108 @@ export const SiteDataProvider = ({ children }) => {
     return { success: true };
   };
 
+  // ===================== FTP & LIVE TV SERVERS CRUD =====================
+  const createServer = async (serverData) => {
+    const rawIp = (serverData.ip || serverData.url || "").trim().replace(/^https?:\/\//, "");
+    const cleanUrl = serverData.url ? serverData.url.trim() : `http://${rawIp}`;
+    const newServer = {
+      id: serverData.id || `server-${Date.now()}`,
+      name: serverData.name.trim(),
+      type: serverData.type === "tv" ? "tv" : "ftp",
+      ip: rawIp,
+      url: cleanUrl,
+      category: serverData.category || (serverData.type === "tv" ? "১৫০+ লাইভ চ্যানেল" : "মুভি ও সিরিজ"),
+      categoryEn: serverData.categoryEn || "",
+      speed: serverData.speed || "10 Gbps BDIX",
+      description: serverData.description || "",
+      protocol: serverData.protocol || "HTTP / BDIX Direct",
+      badge: serverData.badge || "",
+      isActive: serverData.isActive !== false,
+      sortOrder: Number(serverData.sortOrder) || servers.length + 1,
+      createdAt: new Date().toISOString()
+    };
+
+    const updated = [...servers, newServer];
+    setServers(updated);
+    localStorage.setItem("linkbd_custom_servers", JSON.stringify(updated));
+    broadcastChange("servers", updated);
+
+    try {
+      const res = await fetch("/api/servers", {
+        method: "POST",
+        headers: getAuthHeaders(),
+        body: JSON.stringify(newServer)
+      });
+      if (res.ok) {
+        const json = await res.json();
+        if (json.data) {
+          const refined = updated.map(s => s.id === newServer.id ? json.data : s);
+          setServers(refined);
+          localStorage.setItem("linkbd_custom_servers", JSON.stringify(refined));
+        }
+      }
+    } catch (err) {
+      console.warn("[SiteData] Backend createServer sync skipped:", err.message);
+    }
+    return { success: true, data: newServer };
+  };
+
+  const updateServer = async (id, updates) => {
+    if (updates.ip && !updates.url) {
+      const cleanIp = updates.ip.trim().replace(/^https?:\/\//, "");
+      updates.url = `http://${cleanIp}`;
+      updates.ip = cleanIp;
+    }
+    const updated = servers.map(s => s.id === id ? { ...s, ...updates, updatedAt: new Date().toISOString() } : s);
+    setServers(updated);
+    localStorage.setItem("linkbd_custom_servers", JSON.stringify(updated));
+    broadcastChange("servers", updated);
+
+    try {
+      await fetch(`/api/servers/${id}`, {
+        method: "PUT",
+        headers: getAuthHeaders(),
+        body: JSON.stringify(updates)
+      });
+    } catch (err) {
+      console.warn("[SiteData] Backend updateServer sync skipped:", err.message);
+    }
+    return { success: true };
+  };
+
+  const deleteServer = async (id) => {
+    const updated = servers.filter(s => s.id !== id);
+    setServers(updated);
+    localStorage.setItem("linkbd_custom_servers", JSON.stringify(updated));
+    broadcastChange("servers", updated);
+
+    try {
+      await fetch(`/api/servers/${id}`, {
+        method: "DELETE",
+        headers: getAuthHeaders()
+      });
+    } catch (err) {
+      console.warn("[SiteData] Backend deleteServer sync skipped:", err.message);
+    }
+    return { success: true };
+  };
+
+  const resetServers = async () => {
+    setServers(defaultServersList);
+    localStorage.removeItem("linkbd_custom_servers");
+    broadcastChange("servers", defaultServersList);
+
+    try {
+      await fetch("/api/servers/reset", {
+        method: "POST",
+        headers: getAuthHeaders()
+      });
+    } catch (err) {
+      console.warn("[SiteData] Backend resetServers sync skipped:", err.message);
+    }
+    return { success: true };
+  };
+
   const updateGlobalContact = async (updates) => {
     const updated = { ...contact, ...updates, updatedAt: new Date().toISOString() };
     setContact(updated);
@@ -868,22 +1035,132 @@ export const SiteDataProvider = ({ children }) => {
     return { success: true, data: defaultContact };
   };
 
-  // ===================== SETTINGS & CREDENTIALS =====================
-  const updateCredentials = async (email, newPassword, confirmPassword) => {
+
+  // ===================== AD POPUP CRUD =====================
+  const updateAdPopup = async (updates) => {
+    const updated = {
+      ...adPopup,
+      ...updates,
+      updatedAt: new Date().toISOString()
+    };
+    setAdPopup(updated);
+    localStorage.setItem("linkbd_custom_ad_popup", JSON.stringify(updated));
+    localStorage.setItem("linkbd_ad_popup_mtime", String(Date.now()));
+    broadcastChange("adPopup", updated);
+
     try {
-      const res = await fetch("/api/settings/credentials", {
+      const res = await fetch("/api/settings/ad-popup", {
         method: "PUT",
         headers: getAuthHeaders(),
-        body: JSON.stringify({ email, newPassword, confirmPassword })
+        body: JSON.stringify(updates)
       });
       const contentType = res.headers.get("content-type") || "";
       if (res.ok && contentType.includes("application/json")) {
         return await res.json();
       }
     } catch (err) {
+      console.warn("[SiteData] Backend ad-popup sync skipped:", err.message);
+    }
+    return { success: true, data: updated };
+  };
+
+  const resetAdPopup = async () => {
+    setAdPopup(defaultAdPopup);
+    localStorage.setItem("linkbd_custom_ad_popup", JSON.stringify(defaultAdPopup));
+    localStorage.setItem("linkbd_ad_popup_mtime", String(Date.now()));
+    broadcastChange("adPopup", defaultAdPopup);
+
+    try {
+      await fetch("/api/settings/ad-popup/reset", {
+        method: "POST",
+        headers: getAuthHeaders()
+      });
+    } catch (err) {
+      console.warn("[SiteData] Backend ad-popup reset sync skipped:", err.message);
+    }
+    return { success: true, data: defaultAdPopup };
+  };
+
+  // ===================== SETTINGS & CREDENTIALS =====================
+  const updateCredentials = async (param1, newPassword, confirmPassword) => {
+    let payload = {};
+    if (typeof param1 === "object" && param1 !== null) {
+      payload = { ...param1 };
+    } else {
+      payload = {
+        email: param1,
+        username: param1,
+        newPassword,
+        confirmPassword
+      };
+    }
+
+    try {
+      const res = await fetch("/api/settings/credentials", {
+        method: "PUT",
+        headers: getAuthHeaders(),
+        body: JSON.stringify(payload)
+      });
+      const contentType = res.headers.get("content-type") || "";
+      if (res.ok && contentType.includes("application/json")) {
+        const data = await res.json();
+        const updatedAdmin = data.admin || data.data || {
+          username: payload.username || payload.email || adminUser?.username || "",
+          email: payload.email || payload.username || adminUser?.email || "",
+          name: payload.name || adminUser?.name || "Admin",
+          role: "Super Administrator",
+          lastLogin: new Date().toISOString()
+        };
+        setAdminUser(updatedAdmin);
+        localStorage.setItem("linkbd_admin_user", JSON.stringify(updatedAdmin));
+
+        // Persist credentials for client failover
+        const credsToSave = {
+          username: payload.username || payload.email || adminUser?.username || "",
+          name: payload.name || adminUser?.name || "Admin"
+        };
+        if (payload.newPassword) {
+          credsToSave.password = payload.newPassword;
+        } else {
+          try {
+            const existing = JSON.parse(localStorage.getItem("linkbd_admin_credentials"));
+            if (existing?.password) credsToSave.password = existing.password;
+          } catch {}
+        }
+        localStorage.setItem("linkbd_admin_credentials", JSON.stringify(credsToSave));
+
+        return data;
+      }
+    } catch (err) {
       console.warn("[SiteData] Backend credentials sync skipped:", err.message);
     }
-    return { success: true, message: "ক্রেডেনশিয়াল সফলভাবে সংরক্ষিত হয়েছে" };
+
+    // Client-side fallback update
+    const fallbackAdmin = {
+      ...adminUser,
+      username: payload.username || payload.email || adminUser?.username || "",
+      email: payload.email || payload.username || adminUser?.email || "",
+      name: payload.name || adminUser?.name || "Admin",
+      role: "Super Administrator"
+    };
+    setAdminUser(fallbackAdmin);
+    localStorage.setItem("linkbd_admin_user", JSON.stringify(fallbackAdmin));
+
+    const credsToSave = {
+      username: payload.username || payload.email || adminUser?.username || "",
+      name: payload.name || adminUser?.name || "Admin"
+    };
+    if (payload.newPassword) {
+      credsToSave.password = payload.newPassword;
+    } else {
+      try {
+        const existing = JSON.parse(localStorage.getItem("linkbd_admin_credentials"));
+        if (existing?.password) credsToSave.password = existing.password;
+      } catch {}
+    }
+    localStorage.setItem("linkbd_admin_credentials", JSON.stringify(credsToSave));
+
+    return { success: true, message: "ক্রেডেনশিয়াল ও প্রোফাইল সফলভাবে সংরক্ষিত হয়েছে", admin: fallbackAdmin };
   };
 
   // Public Leads & Bill Payment submissions
@@ -937,6 +1214,10 @@ export const SiteDataProvider = ({ children }) => {
     activePackages: packages.filter(p => p.isActive !== false),
     offices,
     activeOffices: offices.filter(o => o.isActive !== false),
+    servers,
+    activeServers: servers.filter(s => s.isActive !== false),
+    ftpServers: servers.filter(s => s.isActive !== false && s.type !== "tv"),
+    tvServers: servers.filter(s => s.isActive !== false && s.type === "tv"),
     contact,
     recentActivity,
     isLoading,
@@ -957,6 +1238,13 @@ export const SiteDataProvider = ({ children }) => {
     updateOffice,
     deleteOffice,
     resetOffices,
+    createServer,
+    updateServer,
+    deleteServer,
+    resetServers,
+    adPopup,
+    updateAdPopup,
+    resetAdPopup,
     updateGlobalContact,
     resetGlobalContact,
     updateCredentials,

@@ -32,33 +32,40 @@ export default function OwnerAndOffices() {
                   <UserCheck className="w-6 h-6" />
                 </div>
                 <div>
-                  <h3 className="font-bold text-slate-900 text-lg">{companyInfo.owner}</h3>
-                  <p className="text-xs font-semibold text-blue-600">Owner, Link BD / Vison Broadband</p>
+                  <h3 className="font-bold text-slate-900 text-lg">
+                    {contact?.ownerName || companyInfo?.ownerName || companyInfo?.owner || "Md. Hasan Mahmud"}
+                  </h3>
+                  <p className="text-xs font-semibold text-blue-600">
+                    {contact?.ownerTitle || companyInfo?.ownerTitle || "Owner, Link BD / Vison Broadband"}
+                  </p>
                 </div>
               </div>
 
               {/* Owner Screenshot Card */}
               <div className="rounded-xl overflow-hidden border border-slate-200 mb-4 bg-slate-50">
                 <img
-                  src="/assets/owner-info.png"
+                  src={contact?.ownerPhoto || "/assets/owner-info.png"}
                   alt="Owner Info"
                   className="w-full h-auto object-cover"
+                  onError={(e) => {
+                    e.currentTarget.src = "/assets/owner-info.png";
+                  }}
                 />
               </div>
 
-              <p className="text-xs text-slate-600 leading-relaxed">
-                "আমরা গ্রাহকদের নিরবচ্ছিন্ন ও ঝামেলামুক্ত ইন্টারনেট সেবা প্রদানে অঙ্গীকারবদ্ধ। সঠিক গতি এবং নির্ভরযোগ্য সাপোর্ট আমাদের মূল লক্ষ্য।"
+              <p className="text-xs text-slate-600 leading-relaxed font-medium">
+                "{contact?.ownerQuote || "আমরা গ্রাহকদের নিরবচ্ছিন্ন ও ঝামেলামুক্ত ইন্টারনেট সেবা প্রদানে অঙ্গীকারবদ্ধ। সঠিক গতি এবং নির্ভরযোগ্য ২৪/৭ সাপোর্ট আমাদের মূল লক্ষ্য।"}"
               </p>
             </div>
 
             <div className="mt-6 pt-4 border-t border-slate-100 space-y-2 text-xs text-slate-600">
               <div className="flex items-center gap-2">
-                <Phone className="w-3.5 h-3.5 text-blue-600" />
-                <span>মোবাইল: +88 01877282171, 01995648616</span>
+                <Phone className="w-3.5 h-3.5 text-blue-600 shrink-0" />
+                <span>মোবাইল: {contact?.ownerPhone || contact?.mainHotline || "+8801995-648616"}</span>
               </div>
               <div className="flex items-center gap-2">
-                <Mail className="w-3.5 h-3.5 text-blue-600" />
-                <span>ইমেইল: mdhasanm3@gmail.com</span>
+                <Mail className="w-3.5 h-3.5 text-blue-600 shrink-0" />
+                <span>ইমেইল: {contact?.ownerEmail || contact?.mainEmail || "linkbd86@gmail.com"}</span>
               </div>
             </div>
           </div>

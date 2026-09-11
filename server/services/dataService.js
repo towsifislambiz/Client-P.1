@@ -10,7 +10,9 @@ import {
   defaultPageImages,
   defaultPackages,
   defaultOffices,
-  defaultGlobalContact
+  defaultGlobalContact,
+  defaultServers,
+  defaultAdPopup
 } from "../config/defaultData.js";
 
 const __filename = fileURLToPath(import.meta.url);
@@ -205,6 +207,8 @@ class DataService {
       images: db.images || defaultPageImages,
       packages: (db.packages || defaultPackages).sort((a, b) => (a.sortOrder || 0) - (b.sortOrder || 0)),
       offices: (db.offices || defaultOffices).sort((a, b) => (a.sortOrder || 0) - (b.sortOrder || 0)),
+      servers: (db.servers || defaultServers).sort((a, b) => (a.sortOrder || 0) - (b.sortOrder || 0)),
+      adPopup: db.adPopup || defaultAdPopup,
       contact: db.contact || defaultGlobalContact,
       recentActivity: db.recentActivity ? db.recentActivity.slice(0, 10) : []
     };
@@ -456,6 +460,96 @@ class DataService {
     return db.offices;
   }
 
+  // ===================== FTP & LIVE TV SERVERS =====================
+  getServers() {
+    const db = this.readDatabase();
+    return (db.servers || defaultServers).sort((a, b) => (a.sortOrder || 0) - (b.sortOrder || 0));
+  }
+
+  getServerById(id) {
+    const db = this.readDatabase();
+    return (db.servers || []).find(s => s.id === id);
+  }
+
+  createServer(serverData) {
+    const db = this.readDatabase();
+    if (!serverData.name) throw new Error("Server name is required");
+    if (!serverData.ip && !serverData.url) throw new Error("Server IP or URL is required");
+
+    const rawIp = (serverData.ip || serverData.url || "").trim().replace(/^https?:\/\//, "");
+    const cleanUrl = serverData.url ? serverData.url.trim() : `http://${rawIp}`;
+
+    const id = serverData.id || `server-${Date.now()}`;
+    const newServer = {
+      id,
+      name: serverData.name.trim(),
+      type: serverData.type === "tv" ? "tv" : "ftp",
+      ip: rawIp,
+      url: cleanUrl,
+      category: serverData.category || (serverData.type === "tv" ? "১৫০+ লাইভ চ্যানেল" : "মুভি ও সিরিজ"),
+      categoryEn: serverData.categoryEn || "",
+      speed: serverData.speed || "10 Gbps BDIX",
+      description: serverData.description || "",
+      protocol: serverData.protocol || "HTTP / BDIX Direct",
+      badge: serverData.badge || "",
+      isActive: serverData.isActive !== false,
+      sortOrder: Number(serverData.sortOrder) || (db.servers ? db.servers.length + 1 : 1),
+      createdAt: new Date().toISOString()
+    };
+
+    if (!db.servers) db.servers = JSON.parse(JSON.stringify(defaultServers));
+    db.servers.push(newServer);
+    this.writeDatabase(db);
+    this.logActivity("server", `Added new server: ${newServer.name}`, newServer.ip);
+    return newServer;
+  }
+
+  updateServer(id, updates) {
+    const db = this.readDatabase();
+    if (!db.servers) db.servers = JSON.parse(JSON.stringify(defaultServers));
+
+    const index = db.servers.findIndex(s => s.id === id);
+    if (index === -1) throw new Error(`Server with ID "${id}" not found`);
+
+    if (updates.ip && !updates.url) {
+      const cleanIp = updates.ip.trim().replace(/^https?:\/\//, "");
+      updates.url = `http://${cleanIp}`;
+      updates.ip = cleanIp;
+    }
+
+    db.servers[index] = {
+      ...db.servers[index],
+      ...updates,
+      updatedAt: new Date().toISOString()
+    };
+
+    this.writeDatabase(db);
+    this.logActivity("server", `Updated server: ${db.servers[index].name}`, `IP: ${db.servers[index].ip}`);
+    return db.servers[index];
+  }
+
+  deleteServer(id) {
+    const db = this.readDatabase();
+    if (!db.servers) db.servers = JSON.parse(JSON.stringify(defaultServers));
+
+    const index = db.servers.findIndex(s => s.id === id);
+    if (index === -1) throw new Error(`Server with ID "${id}" not found`);
+
+    const deleted = db.servers.splice(index, 1)[0];
+    this.writeDatabase(db);
+    this.logActivity("server", `Deleted server: ${deleted.name}`);
+    return deleted;
+  }
+
+  resetServers() {
+    this.createBackup("before-reset-servers");
+    const db = this.readDatabase();
+    db.servers = JSON.parse(JSON.stringify(defaultServers));
+    this.writeDatabase(db);
+    this.logActivity("server", "Reset all FTP and Live TV servers to default Link BD servers");
+    return db.servers;
+  }
+
   // ===================== GLOBAL CONTACT =====================
   getContact() {
     const db = this.readDatabase();
@@ -496,15 +590,51 @@ class DataService {
     }
   }
 
-  updateAdminCredentials(newEmail, newPassword) {
+  updateAdminCredentials(updates = {}) {
     const db = this.readDatabase();
-    if (newEmail) db.admin.email = newEmail.trim();
-    if (newPassword) {
-      db.admin.passwordHash = bcrypt.hashSync(newPassword, 10);
+    if (!db.admin) {
+      db.admin = {
+        username: "admin",
+        email: "admin@linkbd.net",
+        name: "Administrator",
+        role: "Super Administrator",
+        avatar: ""
+      };
     }
+
+    if (updates.username) {
+      db.admin.username = updates.username.trim();
+      db.admin.email = updates.username.trim();
+    } else if (updates.email) {
+      db.admin.email = updates.email.trim();
+      db.admin.username = updates.email.trim();
+    }
+
+    if (updates.name !== undefined) {
+      db.admin.name = updates.name.trim();
+    }
+
+    if (updates.avatar !== undefined) {
+      db.admin.avatar = updates.avatar;
+    }
+
+    if (updates.newPassword) {
+      db.admin.passwordHash = bcrypt.hashSync(updates.newPassword, 10);
+    }
+
+    db.admin.updatedAt = new Date().toISOString();
     this.writeDatabase(db);
-    this.logActivity("security", "Updated admin security credentials");
-    return { email: db.admin.email };
+    this.logActivity("security", `Updated admin credentials/profile for ${db.admin.username || db.admin.email}`);
+    
+    return {
+      username: db.admin.username || db.admin.email,
+      email: db.admin.email,
+      name: db.admin.name || "Hasan",
+      role: db.admin.role || "Super Administrator",
+      avatar: db.admin.avatar || "",
+      lastLogin: db.admin.lastLogin,
+      updatedAt: db.admin.updatedAt
+    };
   }
 
   // ===================== INQUIRIES & BILLS =====================
@@ -567,6 +697,32 @@ class DataService {
     pay.updatedAt = new Date().toISOString();
     this.writeDatabase(db);
     return pay;
+  }
+
+  // ===================== AD POPUP MODAL =====================
+  getAdPopup() {
+    const db = this.readDatabase();
+    return db.adPopup || defaultAdPopup;
+  }
+
+  updateAdPopup(updates = {}) {
+    const db = this.readDatabase();
+    db.adPopup = {
+      ...(db.adPopup || defaultAdPopup),
+      ...updates,
+      updatedAt: new Date().toISOString()
+    };
+    this.writeDatabase(db);
+    this.logActivity("ad_popup", `Updated Ad Popup: ${db.adPopup.title || "Main Popup"} (Active: ${db.adPopup.isActive})`);
+    return db.adPopup;
+  }
+
+  resetAdPopup() {
+    const db = this.readDatabase();
+    db.adPopup = { ...defaultAdPopup, updatedAt: new Date().toISOString() };
+    this.writeDatabase(db);
+    this.logActivity("ad_popup", "Reset Ad Popup to default");
+    return db.adPopup;
   }
 }
 

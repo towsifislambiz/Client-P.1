@@ -13,6 +13,8 @@ import AdminOfficesPage from "./pages/AdminOfficesPage";
 import AdminBrandingPage from "./pages/AdminBrandingPage";
 import AdminSettingsPage from "./pages/AdminSettingsPage";
 import AdminSecurityPage from "./pages/AdminSecurityPage";
+import AdminServersPage from "./pages/AdminServersPage";
+import AdminProfilePage from "./pages/AdminProfilePage";
 
 // Authentication Guard Component
 const ProtectedRoute = ({ children }) => {
@@ -93,6 +95,14 @@ export default function AdminRouter() {
         }
       />
       <Route
+        path="servers"
+        element={
+          <ProtectedRoute>
+            <AdminServersPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
         path="security"
         element={
           <ProtectedRoute>
@@ -101,6 +111,14 @@ export default function AdminRouter() {
         }
       />
 
+            <Route
+        path="profile"
+        element={
+          <ProtectedRoute>
+            <AdminProfilePage />
+          </ProtectedRoute>
+        }
+      />
       {/* Fallback */}
       <Route path="*" element={<Navigate to="/admin" replace />} />
     </Routes>

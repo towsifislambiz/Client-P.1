@@ -17,7 +17,10 @@ import {
   ShieldCheck,
   ShieldAlert,
   Radio,
-  ChevronRight
+  ChevronRight,
+  Server,
+  UserCheck,
+  User
 } from "lucide-react";
 import { useSiteData } from "../../context/SiteDataContext";
 import AdminBottomNav from "./AdminBottomNav";
@@ -40,9 +43,11 @@ export default function AdminLayout({ children }) {
     { to: "/admin/images", label: "ছবি ও ব্যানার", icon: ImageIcon },
     { to: "/admin/packages", label: "প্যাকেজ সমূহ", icon: Package },
     { to: "/admin/offices", label: "অফিস ও যোগাযোগ", icon: Building2 },
+    { to: "/admin/servers", label: "FTP ও টিভি সার্ভার", icon: Server },
     { to: "/admin/branding", label: "লোগো ও ব্র্যান্ডিং", icon: Sparkles },
     { to: "/admin/security", label: "DDoS ও সাইবার নিরাপত্তা", icon: ShieldAlert },
     { to: "/admin/settings", label: "সেটিংস ও ডেটা", icon: Settings },
+    { to: "/admin/profile", label: "অ্যাডমিন প্রোফাইল", icon: UserCheck },
   ];
 
   return (
@@ -110,12 +115,21 @@ export default function AdminLayout({ children }) {
 
           {/* User Profile & Logout */}
           <div className="flex items-center gap-2 pl-2 border-l border-slate-800">
-            <div className="hidden xl:block text-right">
-              <p className="text-xs font-bold text-slate-200 truncate max-w-[150px]">
-                {adminUser?.email || "admin@linkbd.net"}
-              </p>
-              <span className="text-[10px] text-cyan-400">সিস্টেম অ্যাডমিন</span>
-            </div>
+            <Link
+              to="/admin/profile"
+              className="flex items-center gap-2.5 px-2.5 py-1.5 rounded-xl hover:bg-slate-800/80 transition group border border-transparent hover:border-slate-700 cursor-pointer"
+              title="অ্যাডমিন প্রোফাইল ও ক্রেডেনশিয়াল"
+            >
+              <div className="w-7 h-7 rounded-lg bg-gradient-to-tr from-blue-600 to-cyan-500 flex items-center justify-center text-white font-black text-xs shadow-md shadow-blue-500/20">
+                {(adminUser?.name ? adminUser.name[0] : "H").toUpperCase()}
+              </div>
+              <div className="hidden xl:block text-left">
+                <p className="text-xs font-bold text-slate-200 group-hover:text-cyan-300 transition-colors truncate max-w-[130px]">
+                  {adminUser?.name || adminUser?.username || adminUser?.email || "Hasan"}
+                </p>
+                <span className="text-[10px] text-cyan-400 block -mt-0.5">সুপার অ্যাডমিন</span>
+              </div>
+            </Link>
 
             <button
               onClick={handleLogout}

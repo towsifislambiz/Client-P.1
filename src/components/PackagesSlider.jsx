@@ -136,8 +136,9 @@ export default function PackagesSlider({ onSelectPackage }) {
                   </span>
                 </div>
 
-                <div className="p-3.5 sm:p-4 bg-gradient-to-r from-blue-600 to-cyan-500 rounded-2xl text-white text-center font-black text-2xl sm:text-3xl my-4 sm:my-5 shadow-md shadow-blue-500/20">
-                  {pkg.speed} <span className="text-base font-semibold">{pkg.speedUnit}</span>
+                <div className="p-3.5 sm:p-4 bg-gradient-to-r from-blue-600 to-cyan-500 rounded-2xl text-white text-center my-4 sm:my-5 shadow-md shadow-blue-500/20">
+                  <div className="font-black text-2xl sm:text-3xl">{pkg.speed}/{pkg.speedUnit}</div>
+                  <div className="text-[11px] font-bold uppercase tracking-wider text-white/90 mt-0.5">High-Speed Internet</div>
                 </div>
 
                 <div className="text-center mb-4 sm:mb-5">

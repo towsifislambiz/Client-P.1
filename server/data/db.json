@@ -174,9 +174,9 @@
     {
       "id": "silver-plus",
       "name": "Silver+",
-      "speed": 50,
+      "speed": "50",
       "speedUnit": "Mbps",
-      "price": 1,
+      "price": 950,
       "currency": "৳",
       "badge": "Popular",
       "category": "home",
@@ -192,7 +192,7 @@
         "24/7 Phone and Online Support",
         "1:8 Contention Ratio"
       ],
-      "updatedAt": "2026-09-11T17:19:43.138Z"
+      "updatedAt": "2026-09-11T18:53:01.668Z"
     },
     {
       "id": "gold-plus",
@@ -346,7 +346,7 @@
       "isHead": true,
       "isActive": true,
       "sortOrder": 1,
-      "updatedAt": "2026-09-11T14:42:27.333Z"
+      "updatedAt": "2026-09-11T18:23:50.924Z"
     },
     {
       "id": "branch-office",
@@ -409,6 +409,12 @@
   "contact": {
     "companyName": "Link BD Internet Service Provider",
     "slogan": "Connect to The World",
+    "ownerName": "Md. Hasan Mahmud",
+    "ownerTitle": "Owner, Link BD / Vison Broadband",
+    "ownerQuote": "আমরা গ্রাহকদের নিরবচ্ছিন্ন ও ঝামেলামুক্ত ইন্টারনেট সেবা প্রদানে অঙ্গীকারবদ্ধ। সঠিক গতি এবং নির্ভরযোগ্য ২৪/৭ সাপোর্ট আমাদের মূল লক্ষ্য।",
+    "ownerPhoto": "/assets/owner-info.png",
+    "ownerPhone": "+8801995-648616",
+    "ownerEmail": "linkbd86@gmail.com",
     "mainHotline": "+8801995-648616",
     "supportHotline": "+8801897-785024",
     "whatsapp": "+8801995648616",
@@ -416,16 +422,171 @@
     "supportEmail": "linkbd86@gmail.com",
     "website": "www.linkbd.net",
     "wazeLink": "https://www.waze.com/live-map/directions/bd/dhaka-division/dhaka/uttara-house-building?to=place.ChIJyQYztTvEVTcRKxgFKC2Dno8",
-    "operationalStatus": "Operational"
+    "operationalStatus": "Operational",
+    "updatedAt": "2026-09-11T18:47:34.882Z",
+    "billingPortalUrl": "https://client.linkbd.net/pay.php?c=1255",
+    "billingHelpline": "01995648616"
   },
   "admin": {
-    "email": "admin@linkbd.net",
-    "passwordHash": "$2b$10$XnXeCINLjGFtBFvh6wdwLO0X2SAAX497IqG74HUqX83wp3oO/VV52",
-    "lastLogin": "2026-09-11T16:12:18.010Z"
+    "username": "admin@Hasan",
+    "email": "admin@Hasan",
+    "name": "Hasan",
+    "role": "Super Administrator",
+    "avatar": "",
+    "passwordHash": "$2b$10$7QLJlV3k.3m3uruWQSmAte5O0kGNTRWRd1OpRZCLzfygOGY3Zf5Mi",
+    "lastLogin": "2026-09-11T20:43:10.492Z",
+    "updatedAt": "2026-09-11T19:51:03.662Z"
   },
   "inquiries": [],
   "payments": [],
   "recentActivity": [
+    {
+      "id": "act-1789159390493-yyo9q",
+      "type": "auth",
+      "action": "Admin admin@Hasan logged in successfully",
+      "description": "IP: ::1",
+      "timestamp": "2026-09-11T20:43:10.493Z"
+    },
+    {
+      "id": "act-1789159359599-3g8e1",
+      "type": "auth",
+      "action": "Admin admin@Hasan logged in successfully",
+      "description": "IP: ::1",
+      "timestamp": "2026-09-11T20:42:39.599Z"
+    },
+    {
+      "id": "act-1789159355724-f20jy",
+      "type": "auth",
+      "action": "Admin admin@Hasan logged in successfully",
+      "description": "IP: ::1",
+      "timestamp": "2026-09-11T20:42:35.724Z"
+    },
+    {
+      "id": "act-1789159120864-b74nn",
+      "type": "ad_popup",
+      "action": "Updated Ad Popup: Link BD স্পেশাল অফার ও মেগা ডিসকাউন্ট (Active: true)",
+      "description": "Updated Ad Popup: Link BD স্পেশাল অফার ও মেগা ডিসকাউন্ট (Active: true)",
+      "timestamp": "2026-09-11T20:38:40.864Z"
+    },
+    {
+      "id": "act-1789159120848-hmf0j",
+      "type": "auth",
+      "action": "Admin admin@Hasan logged in successfully",
+      "description": "IP: ::1",
+      "timestamp": "2026-09-11T20:38:40.848Z"
+    },
+    {
+      "id": "act-1789157925702-2asq4",
+      "type": "auth",
+      "action": "Admin admin@Hasan logged in successfully",
+      "description": "IP: ::1",
+      "timestamp": "2026-09-11T20:18:45.702Z"
+    },
+    {
+      "id": "act-1789156477907-ubf3p",
+      "type": "server",
+      "action": "Updated server: Link BD Primary FTP Server",
+      "description": "IP: 10.16.100.244",
+      "timestamp": "2026-09-11T19:54:37.907Z"
+    },
+    {
+      "id": "act-1789156455867-5tovq",
+      "type": "server",
+      "action": "Updated server: Link BD Primary FTP Server",
+      "description": "IP: 1",
+      "timestamp": "2026-09-11T19:54:15.867Z"
+    },
+    {
+      "id": "act-1789156434817-9u476",
+      "type": "auth",
+      "action": "Admin admin@Hasan logged in successfully",
+      "description": "IP: ::1",
+      "timestamp": "2026-09-11T19:53:54.817Z"
+    },
+    {
+      "id": "act-1789156263728-czzuj",
+      "type": "auth",
+      "action": "Admin admin@Hasan logged in successfully",
+      "description": "IP: ::1",
+      "timestamp": "2026-09-11T19:51:03.728Z"
+    },
+    {
+      "id": "act-1789156263664-tgm3b",
+      "type": "security",
+      "action": "Updated admin credentials/profile for admin@Hasan",
+      "description": "Updated admin credentials/profile for admin@Hasan",
+      "timestamp": "2026-09-11T19:51:03.664Z"
+    },
+    {
+      "id": "act-1789156263598-rjidt",
+      "type": "auth",
+      "action": "Admin admin@Hasan logged in successfully",
+      "description": "IP: ::1",
+      "timestamp": "2026-09-11T19:51:03.598Z"
+    },
+    {
+      "id": "act-1789156257777-zp786",
+      "type": "security",
+      "action": "Updated admin credentials/profile for admin@Hasan",
+      "description": "Updated admin credentials/profile for admin@Hasan",
+      "timestamp": "2026-09-11T19:50:57.777Z"
+    },
+    {
+      "id": "act-1789156257767-pxn0b",
+      "type": "auth",
+      "action": "Admin admin@Hasan logged in successfully",
+      "description": "IP: ::1",
+      "timestamp": "2026-09-11T19:50:57.767Z"
+    },
+    {
+      "id": "act-1789156252560-jswu7",
+      "type": "auth",
+      "action": "Admin admin@Hasan logged in successfully",
+      "description": "IP: ::1",
+      "timestamp": "2026-09-11T19:50:52.560Z"
+    },
+    {
+      "id": "act-1789156093724-80tst",
+      "type": "auth",
+      "action": "Admin admin@Hasan logged in successfully",
+      "description": "IP: 127.0.0.1",
+      "timestamp": "2026-09-11T19:48:13.724Z"
+    },
+    {
+      "id": "act-1789152781670-j48tz",
+      "type": "package",
+      "action": "Updated package: Silver+",
+      "description": "Price: ৳890, Speed: 50 Mbps",
+      "timestamp": "2026-09-11T18:53:01.670Z"
+    },
+    {
+      "id": "act-1789152454884-3agp6",
+      "type": "contact",
+      "action": "Updated global site contact settings",
+      "description": "Hotline: +8801995-648616",
+      "timestamp": "2026-09-11T18:47:34.884Z"
+    },
+    {
+      "id": "act-1789152438230-d1slx",
+      "type": "contact",
+      "action": "Updated global site contact settings",
+      "description": "Hotline: +8801995-648616",
+      "timestamp": "2026-09-11T18:47:18.230Z"
+    },
+    {
+      "id": "act-1789152356026-dz5v7",
+      "type": "contact",
+      "action": "Updated global site contact settings",
+      "description": "Hotline: +8801995-648616",
+      "timestamp": "2026-09-11T18:45:56.026Z"
+    },
+    {
+      "id": "act-1789151030927-62jhi",
+      "type": "office",
+      "action": "Updated office: Link BD - Head Office (উত্তরা)",
+      "description": "Address updated",
+      "timestamp": "2026-09-11T18:23:50.927Z"
+    },
     {
       "id": "act-1789147183140-vfx8l",
       "type": "package",
@@ -628,55 +789,109 @@
       "action": "Reset global contact settings to default",
       "description": "Reset global contact settings to default",
       "timestamp": "2026-09-11T14:20:11.791Z"
-    },
-    {
-      "id": "act-1789136411788-8hjva",
-      "type": "contact",
-      "action": "Updated global site contact settings",
-      "description": "Hotline: +8801995-999999",
-      "timestamp": "2026-09-11T14:20:11.788Z"
-    },
-    {
-      "id": "act-1789136411785-56zio",
-      "type": "package",
-      "action": "Reset all packages to default Link BD packages",
-      "description": "Reset all packages to default Link BD packages",
-      "timestamp": "2026-09-11T14:20:11.785Z"
-    },
-    {
-      "id": "act-1789136411782-5iopf",
-      "type": "package",
-      "action": "Deleted package: Ultra Fiber 500",
-      "description": "Deleted package: Ultra Fiber 500",
-      "timestamp": "2026-09-11T14:20:11.782Z"
-    },
-    {
-      "id": "act-1789136411778-rlv4k",
-      "type": "package",
-      "action": "Updated package: Ultra Fiber 500",
-      "description": "Price: ৳6000, Speed: 500 Mbps",
-      "timestamp": "2026-09-11T14:20:11.778Z"
-    },
-    {
-      "id": "act-1789136411776-33rvp",
-      "type": "package",
-      "action": "Added new package: Ultra Fiber 500",
-      "description": "500 Mbps @ ৳6000",
-      "timestamp": "2026-09-11T14:20:11.776Z"
-    },
-    {
-      "id": "act-1789136411774-u5a4u",
-      "type": "package",
-      "action": "Updated package: Silver+",
-      "description": "Price: ৳950, Speed: 50 Mbps",
-      "timestamp": "2026-09-11T14:20:11.774Z"
-    },
-    {
-      "id": "act-init",
-      "type": "system",
-      "action": "System Initialized",
-      "description": "Link BD Content Management System initialized with authentic client data",
-      "timestamp": "2026-09-11T14:06:37.659Z"
     }
-  ]
+  ],
+  "servers": [
+    {
+      "id": "server-ftp-1",
+      "name": "Link BD Primary FTP Server",
+      "type": "ftp",
+      "ip": "10.16.100.244",
+      "url": "http://10.16.100.244",
+      "category": "মুভি ও ওয়েব সিরিজ",
+      "categoryEn": "Movies & Series",
+      "speed": "10 Gbps BDIX",
+      "description": "লেটেস্ট বাংলা, হিন্দি ও হলিউড মুভি, ড্রামা সিরিজ এবং টিভি শোর বিশাল কালেকশন।",
+      "protocol": "HTTP / BDIX Fast Cache",
+      "badge": "Primary Hub",
+      "isActive": true,
+      "sortOrder": 1
+    },
+    {
+      "id": "server-ftp-2",
+      "name": "Link BD BDIX Ultra Media Hub",
+      "type": "ftp",
+      "ip": "103.179.128.246",
+      "url": "http://103.179.128.246",
+      "category": "৪K আল্ট্রা এইচডি মিডিয়া",
+      "categoryEn": "4K Ultra HD",
+      "speed": "10 Gbps BDIX",
+      "description": "৪K ব্লুরে ও 1080p হাই-রেজোলিউশন চলচ্চিত্র, অ্যানিমেশন ও ডকুমেন্টারি কালেকশন।",
+      "protocol": "HTTP / BDIX Direct",
+      "badge": "Ultra 4K",
+      "isActive": true,
+      "sortOrder": 2
+    },
+    {
+      "id": "server-ftp-3",
+      "name": "Link BD Local Optical Cache",
+      "type": "ftp",
+      "ip": "172.16.16.10",
+      "url": "http://172.16.16.10",
+      "category": "সফটওয়্যার ও পিসি গেমস",
+      "categoryEn": "Software & Games",
+      "speed": "10 Gbps BDIX",
+      "description": "পিসি গেমস, উইন্ডোজ ও ম্যাক ওএস সফটওয়্যার, ড্রাইভার এবং ইউটিলিটি ফাইল ডাউনলোড।",
+      "protocol": "HTTP / Optical Core",
+      "badge": "High-Speed",
+      "isActive": true,
+      "sortOrder": 3
+    },
+    {
+      "id": "server-ftp-4",
+      "name": "Link BD Cinema & Entertainment Hub",
+      "type": "ftp",
+      "ip": "172.16.50.4",
+      "url": "http://172.16.50.4",
+      "category": "সিনেমা ও নাটক লাইব্রেরি",
+      "categoryEn": "Cinema & Drama",
+      "speed": "10 Gbps BDIX",
+      "description": "জনপ্রিয় বাংলা নাটক, টেলিফিল্ম, ক্লাসিক সিনেমা ও বিশেষ বিনোদন সম্ভার।",
+      "protocol": "HTTP / Fast Stream",
+      "badge": "Cinema Hub",
+      "isActive": true,
+      "sortOrder": 4
+    },
+    {
+      "id": "server-ftp-5",
+      "name": "Link BD Public Media Mirror",
+      "type": "ftp",
+      "ip": "103.179.58.126",
+      "url": "http://103.179.58.126",
+      "category": "মাল্টিমিডিয়া আর্কাইভ ও ব্যাকআপ",
+      "categoryEn": "Media Archive",
+      "speed": "10 Gbps BDIX",
+      "description": "চিরসবুজ চলচ্চিত্র, গান, কনসার্ট এবং মাল্টিমিডিয়া এন্টারটেইনমেন্ট ব্যাকআপ মিরর।",
+      "protocol": "HTTP / Dedicated Mirror",
+      "badge": "Mirror 10G",
+      "isActive": true,
+      "sortOrder": 5
+    },
+    {
+      "id": "server-tv-1",
+      "name": "Link BD Official Live TV & IPTV Portal",
+      "type": "tv",
+      "ip": "10.9.9.10",
+      "url": "http://10.9.9.10",
+      "category": "১৫০+ লাইভ টিভি চ্যানেল",
+      "categoryEn": "150+ Live Channels",
+      "speed": "10 Gbps BDIX Zero Buffer",
+      "description": "টি-স্পোর্টস, স্টার স্পোর্টস, সনি নেটওয়ার্ক, সংবাদ ও বিনোদনের ১৫০+ লাইভ চ্যানেল ফুল এইচডি।",
+      "protocol": "IPTV / Live Web Portal",
+      "badge": "Live IPTV",
+      "isActive": true,
+      "sortOrder": 6
+    }
+  ],
+  "adPopup": {
+    "id": "ad-popup-main",
+    "isActive": true,
+    "title": "Link BD স্পেশাল অফার ও মেগা ডিসকাউন্ট",
+    "imageUrl": "/assets/promo-popup.svg",
+    "targetUrl": "",
+    "actionType": "connection_modal",
+    "cooldownMinutes": 5,
+    "showOnPages": "all",
+    "updatedAt": "2026-09-11T20:38:40.862Z"
+  }
 }
