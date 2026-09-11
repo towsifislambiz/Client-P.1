@@ -121,8 +121,7 @@ export default function PackagesSlider({ onSelectPackage }) {
         {/* Scrollable Package Cards Row with Mobile-Optimized Width & Smooth Snap */}
         <div
           ref={sliderRef}
-          data-lenis-prevent
-          className="flex gap-4 sm:gap-6 overflow-x-auto no-scrollbar scroll-smooth snap-x snap-mandatory py-3 px-1 touch-pan-x"
+          className="flex gap-4 sm:gap-6 overflow-x-auto no-scrollbar snap-x snap-mandatory py-3 px-1"
         >
           {packages.map((pkg) => (
             <div

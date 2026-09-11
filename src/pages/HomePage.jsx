@@ -8,7 +8,7 @@ import FaqSection from "../components/FaqSection";
 
 export default function HomePage({ onOpenConnectionModal, onSelectPackage }) {
   return (
-    <div className="overflow-hidden">
+    <div>
       {/* 1. Dynamic Hero Carousel */}
       <HeroSlider onOpenConnectionModal={onOpenConnectionModal} />
 
