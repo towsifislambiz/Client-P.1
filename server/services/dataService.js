@@ -16,16 +16,22 @@ import {
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const DATA_DIR = path.join(__dirname, "..", "data");
-const DB_FILE = path.join(DATA_DIR, "db.json");
+const isVercel = Boolean(process.env.VERCEL);
+const BUNDLED_DB_FILE = path.join(__dirname, "..", "data", "db.json");
+const DATA_DIR = isVercel ? "/tmp/linkbd_data" : path.join(__dirname, "..", "data");
+const DB_FILE = isVercel ? path.join(DATA_DIR, "db.json") : path.join(DATA_DIR, "db.json");
 const BACKUP_DIR = path.join(DATA_DIR, "backups");
 
-// Ensure directories exist
-if (!fs.existsSync(DATA_DIR)) {
-  fs.mkdirSync(DATA_DIR, { recursive: true });
-}
-if (!fs.existsSync(BACKUP_DIR)) {
-  fs.mkdirSync(BACKUP_DIR, { recursive: true });
+// Ensure directories exist safely
+try {
+  if (!fs.existsSync(DATA_DIR)) {
+    fs.mkdirSync(DATA_DIR, { recursive: true });
+  }
+  if (!fs.existsSync(BACKUP_DIR)) {
+    fs.mkdirSync(BACKUP_DIR, { recursive: true });
+  }
+} catch (e) {
+  console.warn("[DataService] Directory setup notice:", e.message);
 }
 
 class DataService {
@@ -36,6 +42,16 @@ class DataService {
   // Initialize DB with authentic default data if file doesn't exist
   initDatabase() {
     if (!fs.existsSync(DB_FILE)) {
+      if (isVercel && fs.existsSync(BUNDLED_DB_FILE)) {
+        try {
+          const content = fs.readFileSync(BUNDLED_DB_FILE, "utf-8");
+          fs.writeFileSync(DB_FILE, content, "utf-8");
+          console.log("[DataService] Seeded /tmp database from bundled db.json on Vercel.");
+          return;
+        } catch (e) {
+          console.warn("[DataService] Could not copy bundled DB:", e.message);
+        }
+      }
       const initialData = {
         branding: { ...defaultLogo },
         images: JSON.parse(JSON.stringify(defaultPageImages)),

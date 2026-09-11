@@ -10,11 +10,16 @@ import { fileURLToPath } from "url";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Uploads saved in public/uploads so they are instantly accessible statically
-const UPLOAD_DIR = path.join(__dirname, "..", "..", "public", "uploads");
+// Uploads saved in public/uploads (or /tmp/uploads on Vercel)
+const isVercel = Boolean(process.env.VERCEL);
+const UPLOAD_DIR = isVercel ? "/tmp/uploads" : path.join(__dirname, "..", "..", "public", "uploads");
 
-if (!fs.existsSync(UPLOAD_DIR)) {
-  fs.mkdirSync(UPLOAD_DIR, { recursive: true });
+try {
+  if (!fs.existsSync(UPLOAD_DIR)) {
+    fs.mkdirSync(UPLOAD_DIR, { recursive: true });
+  }
+} catch (e) {
+  console.warn("[UploadMiddleware] Directory setup notice:", e.message);
 }
 
 // Storage Configuration

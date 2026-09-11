@@ -59,7 +59,13 @@ app.use(express.json({ limit: SECURITY_CONFIG.payloadLimits.defaultBody }));
 app.use(express.urlencoded({ extended: true, limit: SECURITY_CONFIG.payloadLimits.defaultBody }));
 
 // 6. Static file serving for uploads
-const UPLOAD_DIR = path.join(__dirname, "..", "public", "uploads");
+const isVercelEnv = Boolean(process.env.VERCEL);
+const UPLOAD_DIR = isVercelEnv ? "/tmp/uploads" : path.join(__dirname, "..", "public", "uploads");
+try {
+  if (!fs.existsSync(UPLOAD_DIR)) {
+    fs.mkdirSync(UPLOAD_DIR, { recursive: true });
+  }
+} catch (e) {}
 app.use("/uploads", express.static(UPLOAD_DIR));
 
 // 7. API Routes
