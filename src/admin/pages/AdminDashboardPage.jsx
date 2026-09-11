@@ -83,29 +83,36 @@ export default function AdminDashboardPage() {
             এখানে থেকে আপনি সহজেই ওয়েবসাইটের ছবি, প্যাকেজ তালিকা ও রেট, অফিসের ঠিকানা ও হটলাইন এবং সাইট লোগো সম্পূর্ণ নিজের মতো পরিবর্তন করতে পারবেন।
           </p>
 
-          <div className="flex flex-wrap items-center gap-3 mt-5">
+          <div className="grid grid-cols-2 sm:flex sm:flex-wrap items-center gap-2 sm:gap-3 mt-5">
             <Link
               to="/admin/packages"
-              className="px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs shadow-lg shadow-blue-600/30 transition flex items-center gap-1.5"
+              className="py-2.5 px-3 sm:px-4 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs shadow-lg shadow-blue-600/30 transition flex items-center justify-center gap-1.5 text-center min-h-[44px]"
             >
               <Zap className="w-3.5 h-3.5" />
-              <span>প্যাকেজ ম্যানেজ করুন</span>
+              <span>প্যাকেজ ম্যানেজ</span>
+            </Link>
+            <Link
+              to="/admin/images"
+              className="py-2.5 px-3 sm:px-4 rounded-xl bg-slate-800 hover:bg-slate-700 text-cyan-300 font-bold text-xs border border-slate-700 transition flex items-center justify-center gap-1.5 text-center min-h-[44px]"
+            >
+              <ImageIcon className="w-3.5 h-3.5" />
+              <span>ছবি পরিবর্তন</span>
             </Link>
             <Link
               to="/admin/security"
-              className="px-4 py-2 rounded-xl bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 font-bold text-xs border border-emerald-500/30 transition flex items-center gap-1.5"
+              className="py-2.5 px-3 sm:px-4 rounded-xl bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 font-bold text-xs border border-emerald-500/30 transition flex items-center justify-center gap-1.5 text-center min-h-[44px]"
             >
               <ShieldAlert className="w-3.5 h-3.5 text-emerald-400" />
-              <span>DDoS ও সিকিউরিটি SOC</span>
+              <span>DDoS শিল্ড</span>
             </Link>
             <Link
               to="/"
               target="_blank"
               rel="noopener noreferrer"
-              className="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-semibold text-xs border border-slate-700 transition flex items-center gap-1.5"
+              className="py-2.5 px-3 sm:px-4 rounded-xl bg-slate-800/80 hover:bg-slate-700 text-slate-200 font-semibold text-xs border border-slate-700 transition flex items-center justify-center gap-1.5 text-center min-h-[44px]"
             >
               <ExternalLink className="w-3.5 h-3.5 text-cyan-400" />
-              <span>লাইভ সাইট দেখুন</span>
+              <span>লাইভ সাইট</span>
             </Link>
           </div>
         </div>
