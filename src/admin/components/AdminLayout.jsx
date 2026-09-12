@@ -27,7 +27,7 @@ import AdminBottomNav from "./AdminBottomNav";
 
 export default function AdminLayout({ children }) {
   const [mobileDrawerOpen, setMobileDrawerOpen] = useState(false);
-  const { adminUser, logout, branding, isBackendOnline } = useSiteData();
+  const { adminUser, logout, branding, isBackendOnline, isBackendChecked } = useSiteData();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -81,14 +81,24 @@ export default function AdminLayout({ children }) {
 
         {/* Status & Quick Actions */}
         <div className="flex items-center gap-2 sm:gap-3">
-          {/* Backend Status Indicator */}
+          {/* Backend / CMS Status Indicator */}
           <div className="hidden md:flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-slate-800 border border-slate-700 text-[11px] font-medium text-slate-300">
             <span
               className={`w-2 h-2 rounded-full ${
-                isBackendOnline ? "bg-emerald-400 animate-pulse" : "bg-amber-400"
+                isBackendOnline
+                  ? "bg-emerald-400 animate-pulse"
+                  : isBackendChecked
+                  ? "bg-emerald-400"
+                  : "bg-amber-400 animate-ping"
               }`}
             />
-            <span>{isBackendOnline ? "Server Online" : "Connecting..."}</span>
+            <span>
+              {isBackendOnline
+                ? "Server Online"
+                : isBackendChecked
+                ? "CMS Active"
+                : "Connecting..."}
+            </span>
           </div>
 
           {/* DDoS Shield Indicator */}

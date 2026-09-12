@@ -42,7 +42,7 @@ export default function AdminDashboardPage() {
     {
       label: "অফিস ও ব্রাঞ্চ সংখ্যা",
       value: offices.length,
-      sub: "হেড অফিস, কুষ্টিয়া, ফরিদপুর, সিঙ্গাপুর",
+      sub: offices.map(o => o.city?.split(",")[0]?.trim() || o.name).slice(0, 4).join(", ") || "উত্তরা, কুষ্টিয়া, ফরিদপুর, সিঙ্গাপুর",
       icon: Building2,
       link: "/admin/offices",
       color: "from-emerald-600 to-teal-600",

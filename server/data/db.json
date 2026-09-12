@@ -13,7 +13,7 @@
       "currentUrl": "/assets/hero-home.png",
       "defaultUrl": "/assets/hero-home.png",
       "description": "হোম ইন্টারনেট স্লাইডারের মূল চিত্র (4K স্ট্রিমিং ও ফ্যামিলি নেটওয়ার্ক)",
-      "updatedAt": "2026-09-11T14:20:11.795Z"
+      "updatedAt": "2026-09-12T10:19:59.820Z"
     },
     {
       "id": "home_slide2",
@@ -174,9 +174,9 @@
     {
       "id": "silver-plus",
       "name": "Silver+",
-      "speed": "50",
+      "speed": 50,
       "speedUnit": "Mbps",
-      "price": 950,
+      "price": 890,
       "currency": "৳",
       "badge": "Popular",
       "category": "home",
@@ -191,8 +191,7 @@
         "IPv6 Public IP Only",
         "24/7 Phone and Online Support",
         "1:8 Contention Ratio"
-      ],
-      "updatedAt": "2026-09-11T18:53:01.668Z"
+      ]
     },
     {
       "id": "gold-plus",
@@ -421,11 +420,10 @@
     "mainEmail": "linkbd86@gmail.com",
     "supportEmail": "linkbd86@gmail.com",
     "website": "www.linkbd.net",
-    "wazeLink": "https://www.waze.com/live-map/directions/bd/dhaka-division/dhaka/uttara-house-building?to=place.ChIJyQYztTvEVTcRKxgFKC2Dno8",
-    "operationalStatus": "Operational",
-    "updatedAt": "2026-09-11T18:47:34.882Z",
     "billingPortalUrl": "https://client.linkbd.net/pay.php?c=1255",
-    "billingHelpline": "01995648616"
+    "billingHelpline": "01995648616",
+    "wazeLink": "https://www.waze.com/live-map/directions/bd/dhaka-division/dhaka/uttara-house-building?to=place.ChIJyQYztTvEVTcRKxgFKC2Dno8",
+    "operationalStatus": "Operational"
   },
   "admin": {
     "username": "admin@Hasan",
@@ -440,6 +438,83 @@
   "inquiries": [],
   "payments": [],
   "recentActivity": [
+    {
+      "id": "act-1789208399831-b8rgq",
+      "type": "branding",
+      "action": "Reset logo to default (navbarLogo)",
+      "description": "Reset logo to default (navbarLogo)",
+      "timestamp": "2026-09-12T10:19:59.831Z"
+    },
+    {
+      "id": "act-1789208399826-9lbkz",
+      "type": "branding",
+      "action": "Updated site logo / branding",
+      "description": "Changed: navbarLogo",
+      "timestamp": "2026-09-12T10:19:59.826Z"
+    },
+    {
+      "id": "act-1789208399822-fejsu",
+      "type": "image",
+      "action": "Reset image to default: হিরো স্লাইড ১ — হোম ইন্টারনেট",
+      "description": "Reset image to default: হিরো স্লাইড ১ — হোম ইন্টারনেট",
+      "timestamp": "2026-09-12T10:19:59.822Z"
+    },
+    {
+      "id": "act-1789208399818-1jkx0",
+      "type": "image",
+      "action": "Updated image: হিরো স্লাইড ১ — হোম ইন্টারনেট",
+      "description": "Replaced /assets/hero-home.png with /uploads/custom-home.png",
+      "timestamp": "2026-09-12T10:19:59.818Z"
+    },
+    {
+      "id": "act-1789208399815-5jb9x",
+      "type": "contact",
+      "action": "Reset global contact settings to default",
+      "description": "Reset global contact settings to default",
+      "timestamp": "2026-09-12T10:19:59.815Z"
+    },
+    {
+      "id": "act-1789208399812-wkgvp",
+      "type": "contact",
+      "action": "Updated global site contact settings",
+      "description": "Hotline: +8801995-999999",
+      "timestamp": "2026-09-12T10:19:59.812Z"
+    },
+    {
+      "id": "act-1789208399809-50587",
+      "type": "package",
+      "action": "Reset all packages to default Link BD packages",
+      "description": "Reset all packages to default Link BD packages",
+      "timestamp": "2026-09-12T10:19:59.809Z"
+    },
+    {
+      "id": "act-1789208399805-ociri",
+      "type": "package",
+      "action": "Deleted package: Ultra Fiber 500",
+      "description": "Deleted package: Ultra Fiber 500",
+      "timestamp": "2026-09-12T10:19:59.805Z"
+    },
+    {
+      "id": "act-1789208399798-zvyd8",
+      "type": "package",
+      "action": "Updated package: Ultra Fiber 500",
+      "description": "Price: ৳6000, Speed: 500 Mbps",
+      "timestamp": "2026-09-12T10:19:59.798Z"
+    },
+    {
+      "id": "act-1789208399795-7fllu",
+      "type": "package",
+      "action": "Added new package: Ultra Fiber 500",
+      "description": "500 Mbps @ ৳6000",
+      "timestamp": "2026-09-12T10:19:59.795Z"
+    },
+    {
+      "id": "act-1789208399793-211o4",
+      "type": "package",
+      "action": "Updated package: Silver+",
+      "description": "Price: ৳950, Speed: 50 Mbps",
+      "timestamp": "2026-09-12T10:19:59.793Z"
+    },
     {
       "id": "act-1789162803176-jwtcq",
       "type": "auth",
@@ -712,83 +787,6 @@
       "action": "Reset logo to default (navbarLogo)",
       "description": "Reset logo to default (navbarLogo)",
       "timestamp": "2026-09-11T14:42:27.324Z"
-    },
-    {
-      "id": "act-1789137454625-ua110",
-      "type": "branding",
-      "action": "Updated site logo / branding",
-      "description": "Changed: navbarLogo",
-      "timestamp": "2026-09-11T14:37:34.625Z"
-    },
-    {
-      "id": "act-1789137001033-45ocq",
-      "type": "office",
-      "action": "Updated office: Link BD - Head Office (উত্তরা)",
-      "description": "Address updated",
-      "timestamp": "2026-09-11T14:30:01.033Z"
-    },
-    {
-      "id": "act-1789136950005-pvi2t",
-      "type": "image",
-      "action": "Updated image: হিরো স্লাইড ৩ — দেশব্যাপী নেটওয়ার্ক",
-      "description": "Replaced /assets/banner-coverage.png with /uploads/img-1789136949998-10a702dfd91a0e36.png",
-      "timestamp": "2026-09-11T14:29:10.005Z"
-    },
-    {
-      "id": "act-1789136924157-dpzcs",
-      "type": "package",
-      "action": "Updated package: Silver+",
-      "description": "Price: ৳1, Speed: 50 Mbps",
-      "timestamp": "2026-09-11T14:28:44.157Z"
-    },
-    {
-      "id": "act-1789136922486-tfn7g",
-      "type": "package",
-      "action": "Updated package: Silver+",
-      "description": "Price: ৳1, Speed: 50 Mbps",
-      "timestamp": "2026-09-11T14:28:42.486Z"
-    },
-    {
-      "id": "act-1789136895814-6d24p",
-      "type": "auth",
-      "action": "Admin logged in successfully",
-      "description": "IP: ::1",
-      "timestamp": "2026-09-11T14:28:15.814Z"
-    },
-    {
-      "id": "act-1789136865695-9g1oz",
-      "type": "package",
-      "action": "Updated package: Silver+",
-      "description": "Price: ৳1, Speed: 50 Mbps",
-      "timestamp": "2026-09-11T14:27:45.695Z"
-    },
-    {
-      "id": "act-1789136820343-1io77",
-      "type": "auth",
-      "action": "Admin logged in successfully",
-      "description": "IP: ::1",
-      "timestamp": "2026-09-11T14:27:00.343Z"
-    },
-    {
-      "id": "act-1789136671229-xd93t",
-      "type": "auth",
-      "action": "Admin logged in successfully",
-      "description": "IP: ::1",
-      "timestamp": "2026-09-11T14:24:31.229Z"
-    },
-    {
-      "id": "act-1789136483443-kynrf",
-      "type": "auth",
-      "action": "Admin logged in successfully",
-      "description": "IP: ::1",
-      "timestamp": "2026-09-11T14:21:23.443Z"
-    },
-    {
-      "id": "act-1789136411801-lc3h7",
-      "type": "branding",
-      "action": "Reset logo to default (navbarLogo)",
-      "description": "Reset logo to default (navbarLogo)",
-      "timestamp": "2026-09-11T14:20:11.801Z"
     }
   ],
   "servers": [

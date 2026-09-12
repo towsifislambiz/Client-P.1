@@ -106,10 +106,11 @@ export default function AdminPackagesPage() {
 
   const handleToggleActive = async (pkg) => {
     try {
-      await updatePackage(pkg.id, { isActive: !pkg.isActive });
+      const currentlyActive = pkg.isActive !== false;
+      await updatePackage(pkg.id, { isActive: !currentlyActive });
       setToast({
         type: "success",
-        title: pkg.isActive ? "প্যাকেজ নিষ্ক্রিয় করা হয়েছে" : "প্যাকেজ সক্রিয় করা হয়েছে",
+        title: currentlyActive ? "প্যাকেজ নিষ্ক্রিয় করা হয়েছে" : "প্যাকেজ সক্রিয় করা হয়েছে",
         message: `পাবলিক ওয়েবসাইটে এর অবস্থা পরিবর্তন হয়েছে।`
       });
     } catch (err) {
@@ -230,21 +231,23 @@ export default function AdminPackagesPage() {
 
       {/* Packages Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
-        {packages.map((pkg) => (
-          <div
-            key={pkg.id}
-            className={`bg-slate-900/90 border rounded-2xl p-5 flex flex-col justify-between transition shadow-lg relative ${
-              pkg.isActive
-                ? "border-slate-800 hover:border-slate-700"
-                : "border-slate-800/50 opacity-60 bg-slate-950/60"
-            }`}
-          >
-            <div>
-              {/* Card Header */}
-              <div className="flex items-start justify-between gap-2 mb-3">
-                <div className="flex items-center gap-2">
-                  <span className={`w-2.5 h-2.5 rounded-full ${pkg.isActive ? "bg-emerald-400" : "bg-slate-600"}`} />
-                  <h3 className="text-base sm:text-lg font-bold text-white">{pkg.name}</h3>
+        {packages.map((pkg) => {
+          const isPkgActive = pkg.isActive !== false;
+          return (
+            <div
+              key={pkg.id}
+              className={`bg-slate-900/90 border rounded-2xl p-5 flex flex-col justify-between transition shadow-lg relative ${
+                isPkgActive
+                  ? "border-slate-800 hover:border-slate-700"
+                  : "border-slate-800/50 opacity-60 bg-slate-950/60"
+              }`}
+            >
+              <div>
+                {/* Card Header */}
+                <div className="flex items-start justify-between gap-2 mb-3">
+                  <div className="flex items-center gap-2">
+                    <span className={`w-2.5 h-2.5 rounded-full ${isPkgActive ? "bg-emerald-400" : "bg-slate-600"}`} />
+                    <h3 className="text-base sm:text-lg font-bold text-white">{pkg.name}</h3>
                   {pkg.badge && (
                     <span className="px-2 py-0.5 rounded-md text-[10px] font-bold bg-cyan-500/15 text-cyan-300 border border-cyan-500/30">
                       {pkg.badge}
@@ -301,14 +304,14 @@ export default function AdminPackagesPage() {
                 <button
                   type="button"
                   onClick={() => handleToggleActive(pkg)}
-                  title={pkg.isActive ? "প্যাকেজটি লুকান (Inactive)" : "প্যাকেজটি সক্রিয় করুন"}
+                  title={isPkgActive ? "প্যাকেজটি লুকান (Inactive)" : "প্যাকেজটি সক্রিয় করুন"}
                   className={`p-2 rounded-xl text-xs font-semibold transition cursor-pointer ${
-                    pkg.isActive
+                    isPkgActive
                       ? "bg-slate-800 text-emerald-400 hover:bg-slate-700"
                       : "bg-slate-800 text-slate-500 hover:text-slate-300"
                   }`}
                 >
-                  {pkg.isActive ? <Eye className="w-3.5 h-3.5" /> : <EyeOff className="w-3.5 h-3.5" />}
+                  {isPkgActive ? <Eye className="w-3.5 h-3.5" /> : <EyeOff className="w-3.5 h-3.5" />}
                 </button>
 
                 <button
@@ -342,7 +345,8 @@ export default function AdminPackagesPage() {
               </div>
             </div>
           </div>
-        ))}
+        );
+      })}
       </div>
 
       {/* Add / Edit Package Modal */}

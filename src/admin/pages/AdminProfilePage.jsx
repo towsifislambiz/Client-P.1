@@ -22,7 +22,7 @@ import { useSiteData } from "../../context/SiteDataContext";
 import ToastNotification from "../components/ToastNotification";
 
 export default function AdminProfilePage() {
-  const { adminUser, updateCredentials, isBackendOnline } = useSiteData();
+  const { adminUser, updateCredentials, isBackendOnline, isBackendChecked } = useSiteData();
   const [toast, setToast] = useState(null);
 
   // Profile Information State
@@ -218,8 +218,8 @@ export default function AdminProfilePage() {
               </div>
               <div className="flex items-center justify-between">
                 <span className="text-slate-400">সার্ভার সংযোগ</span>
-                <span className={`font-semibold ${isBackendOnline ? "text-emerald-400" : "text-amber-400"}`}>
-                  {isBackendOnline ? "Online (Port 5100)" : "Connecting..."}
+                <span className={`font-semibold ${isBackendOnline ? "text-emerald-400" : isBackendChecked ? "text-cyan-400" : "text-amber-400"}`}>
+                  {isBackendOnline ? "Online (Node.js API)" : isBackendChecked ? "Active (Host Standalone CMS)" : "Connecting..."}
                 </span>
               </div>
               <div className="flex items-center justify-between">

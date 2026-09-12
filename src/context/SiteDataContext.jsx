@@ -67,7 +67,17 @@ export const SiteDataProvider = ({ children }) => {
   const [packages, setPackages] = useState(() => {
     try {
       const saved = localStorage.getItem("linkbd_custom_packages");
-      return saved ? JSON.parse(saved) : defaultPackagesList;
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          return parsed.map(p => ({
+            ...p,
+            isActive: p.isActive !== false,
+            price: (p.id === "silver-plus" && p.price === 1) ? 890 : p.price
+          }));
+        }
+      }
+      return defaultPackagesList;
     } catch {
       return defaultPackagesList;
     }
@@ -176,6 +186,7 @@ export const SiteDataProvider = ({ children }) => {
   const [recentActivity, setRecentActivity] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isBackendOnline, setIsBackendOnline] = useState(false);
+  const [isBackendChecked, setIsBackendChecked] = useState(false);
 
   // Fast Key-Value Image Map for Components
   const imageMap = useMemo(() => {
@@ -341,6 +352,7 @@ export const SiteDataProvider = ({ children }) => {
       setIsBackendOnline(false);
     } finally {
       setIsLoading(false);
+      setIsBackendChecked(true);
     }
   }, [getAuthHeaders]);
 
@@ -1251,6 +1263,7 @@ export const SiteDataProvider = ({ children }) => {
     recentActivity,
     isLoading,
     isBackendOnline,
+    isBackendChecked,
     refreshSiteData: fetchSiteData,
 
     // CRUD

@@ -178,7 +178,7 @@ export const defaultPackages = [
     name: "Silver+",
     speed: 50,
     speedUnit: "Mbps",
-    price: 1,
+    price: 890,
     currency: "৳",
     badge: "Popular",
     category: "home",
