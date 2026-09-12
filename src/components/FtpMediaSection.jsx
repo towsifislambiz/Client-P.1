@@ -1,7 +1,9 @@
 import React from "react";
 import { Tv, Film, Play, Download, Server, Sparkles, Gamepad2, Radio } from "lucide-react";
+import { useSiteData } from "../context/SiteDataContext";
 
 export default function FtpMediaSection() {
+  const { imageMap } = useSiteData();
   const mediaCategories = [
     { name: "Live TV (১৫০+ চ্যানেল)", icon: Tv, count: "HD & 4K Stream", color: "from-blue-600 to-cyan-500" },
     { name: "মুভি ও নাটক", icon: Film, count: "১০,০০০+ কালেকশন", color: "from-purple-600 to-indigo-600" },
@@ -28,9 +30,12 @@ export default function FtpMediaSection() {
         {/* Visual Banner Preview */}
         <div className="mb-12 rounded-2xl overflow-hidden shadow-2xl border border-slate-800">
           <img
-            src="/assets/banner-ftptv.png"
+            src={imageMap?.["ftptv_banner"]?.currentUrl || "/assets/banner-ftptv.png"}
             alt="FTP and Live TV Server"
             className="w-full h-auto object-cover max-h-[460px]"
+            onError={(e) => {
+              e.currentTarget.src = "/assets/banner-ftptv.png";
+            }}
           />
         </div>
 

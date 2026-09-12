@@ -4,7 +4,7 @@ import { coverageAreas, companyInfo } from "../data/ispData";
 import { useSiteData } from "../context/SiteDataContext";
 
 export default function CoverageChecker({ onOpenConnectionModal }) {
-  const { contact } = useSiteData();
+  const { contact, imageMap } = useSiteData();
   const [query, setQuery] = useState("");
   const [searchResult, setSearchResult] = useState(null);
 
@@ -48,7 +48,7 @@ export default function CoverageChecker({ onOpenConnectionModal }) {
     <section id="coverage" className="py-14 sm:py-20 bg-slate-900 text-white relative overflow-hidden">
       {/* Background Graphic */}
       <div className="absolute inset-0 opacity-10 pointer-events-none">
-        <img src="/assets/banner-coverage.png" alt="Coverage" className="w-full h-full object-cover" />
+        <img src={imageMap?.["coverage_banner"]?.currentUrl || "/assets/banner-coverage.png"} alt="Coverage" className="w-full h-full object-cover" />
       </div>
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -149,9 +149,12 @@ export default function CoverageChecker({ onOpenConnectionModal }) {
         {/* Coverage Banner Display */}
         <div className="rounded-2xl sm:rounded-3xl overflow-hidden border border-slate-800 shadow-2xl bg-slate-950 mb-8 sm:mb-12">
           <img
-            src="/assets/banner-coverage.png"
+            src={imageMap?.["coverage_banner"]?.currentUrl || "/assets/banner-coverage.png"}
             alt="Link BD Coverage Map"
             className="w-full h-auto object-cover max-h-[420px]"
+            onError={(e) => {
+              e.currentTarget.src = "/assets/banner-coverage.png";
+            }}
           />
         </div>
 

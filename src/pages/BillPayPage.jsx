@@ -10,7 +10,7 @@ import confetti from "canvas-confetti";
 import { useSiteData } from "../context/SiteDataContext";
 
 export default function BillPayPage() {
-  const { contact } = useSiteData();
+  const { contact, imageMap } = useSiteData();
   const [selectedStepModal, setSelectedStepModal] = useState(null);
   const [copiedHelpline, setCopiedHelpline] = useState(false);
   const [openFaq, setOpenFaq] = useState(0);
@@ -42,7 +42,7 @@ export default function BillPayPage() {
       badge: "ধাপ ০১ • এন্ট্রি",
       title: "কাস্টমার আইডি বা মোবাইল নম্বর লিখুন",
       summary: "পেমেন্ট পোর্টালে গিয়ে আপনার কাস্টমার আইডি, ইউজার আইডি অথবা রেজিস্টার্ড মোবাইল নম্বর দিন।",
-      image: "/assets/payment-step1.jpg",
+      image: imageMap["payment_step1"]?.currentUrl || "/assets/payment-step1.jpg",
       bullets: [
         "উপরে থাকা 'অনলাইন বিল পরিশোধ করুন' বাটনে ক্লিক করলে সরাসরি Link BD-এর বিলিং পোর্টাল ওপেন হবে।",
         "সেখানে 'Customer ID/User ID/Mobile No' বক্সে আপনার আইডি অথবা মোবাইল নম্বরটি লিখুন।",
@@ -55,7 +55,7 @@ export default function BillPayPage() {
       badge: "ধাপ ০২ • যাচাই ও নির্বাচন",
       title: "অ্যাকাউন্টের তথ্য যাচাই ও পেমেন্ট মাধ্যম নির্বাচন",
       summary: "স্ক্রিনে আপনার নাম, প্যাকেজ, বকেয়া বিল এবং এক্সপায়ার ডেট দেখে bKash অথবা shurjoPay সিলেক্ট করুন।",
-      image: "/assets/payment-step2.jpg",
+      image: imageMap["payment_step2"]?.currentUrl || "/assets/payment-step2.jpg",
       bullets: [
         "আপনার নাম (Name), ইউজার আইডি (UserID), প্যাকেজ (Package Name) এবং বকেয়া টাকা (Payable Amount) যাচাই করুন।",
         "সরাসরি বিকাশ থেকে পেমেন্ট করতে 'bKash' বাটনে ক্লিক করুন।",
@@ -68,7 +68,7 @@ export default function BillPayPage() {
       badge: "ধাপ ০৩ • ইনস্ট্যান্ট নবায়ন",
       title: "পেমেন্ট সম্পন্ন ও স্বয়ংক্রিয় কানেকশন সচল",
       summary: "গেটওয়েতে পিন বা ওটিপি দিয়ে কনফার্ম করলেই ২-৩ সেকেন্ডে আপনার ইন্টারনেট অটো-রিনিউয়াল হয়ে যাবে।",
-      image: "/assets/payment-step3.jpg",
+      image: imageMap["payment_step3"]?.currentUrl || "/assets/payment-step3.jpg",
       bullets: [
         "নির্বাচিত গেটওয়েতে আপনার অ্যাকাউন্ট পিন বা ওটিপি (OTP) দিয়ে পেমেন্ট সফল করুন।",
         "পেমেন্ট সম্পন্ন হওয়ার সাথে সাথেই SmartISP ক্লাউড সিস্টেমের মাধ্যমে আপনার ইন্টারনেট লাইন তাৎক্ষণিক সচল হয়ে যাবে!",
@@ -220,19 +220,36 @@ export default function BillPayPage() {
               </p>
             </div>
 
-            {/* Primary High-Impact CTA Button */}
+            {/* Primary High-Impact CTA Button with Auto-Jump Animation */}
             <div>
-              <a
+              <motion.a
                 href={billingUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={handlePayClick}
-                className="w-full py-4 px-6 sm:px-8 bg-gradient-to-r from-blue-600 via-indigo-600 to-cyan-500 hover:from-blue-500 hover:to-cyan-400 active:scale-[0.99] text-white font-black text-sm sm:text-base rounded-2xl shadow-xl shadow-blue-600/30 transition-all duration-300 flex items-center justify-center gap-3 cursor-pointer group text-center"
+                animate={{
+                  y: [0, -10, 0, -5, 0],
+                  scale: [1, 1.02, 1, 1.01, 1],
+                  boxShadow: [
+                    "0 10px 25px -5px rgba(37, 99, 235, 0.4)",
+                    "0 22px 38px -5px rgba(6, 182, 212, 0.65)",
+                    "0 10px 25px -5px rgba(37, 99, 235, 0.4)",
+                    "0 16px 32px -5px rgba(59, 130, 246, 0.55)",
+                    "0 10px 25px -5px rgba(37, 99, 235, 0.4)"
+                  ]
+                }}
+                transition={{
+                  duration: 2.2,
+                  repeat: Infinity,
+                  repeatDelay: 0.8,
+                  ease: "easeInOut"
+                }}
+                className="w-full py-4 px-6 sm:px-8 bg-gradient-to-r from-blue-600 via-indigo-600 to-cyan-500 hover:from-blue-500 hover:to-cyan-400 active:scale-[0.99] text-white font-black text-sm sm:text-base rounded-2xl transition-all duration-300 flex items-center justify-center gap-3 cursor-pointer group text-center select-none"
               >
                 <CreditCard className="w-5 h-5 text-cyan-200 group-hover:scale-110 transition-transform" />
                 <span>অনলাইন বিল পরিশোধ করুন (Link BD Portal)</span>
                 <ExternalLink className="w-4 h-4 text-cyan-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-              </a>
+              </motion.a>
             </div>
 
             {/* Quick Guarantees & Helpline Footer */}

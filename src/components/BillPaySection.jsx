@@ -6,7 +6,7 @@ import { companyInfo } from "../data/ispData";
 import { useSiteData } from "../context/SiteDataContext";
 
 export default function BillPaySection() {
-  const { contact, submitPayment } = useSiteData();
+  const { contact, submitPayment, imageMap } = useSiteData();
   const [customerId, setCustomerId] = useState("");
   const [phone, setPhone] = useState("");
   const [amount, setAmount] = useState("");
@@ -91,9 +91,12 @@ export default function BillPaySection() {
           className="mb-14 rounded-3xl overflow-hidden shadow-2xl border border-slate-200"
         >
           <img
-            src="/assets/banner-billpay.png"
+            src={imageMap?.["billpay_banner"]?.currentUrl || "/assets/banner-billpay.png"}
             alt="Online Bill Payment"
             className="w-full h-auto object-cover max-h-[400px]"
+            onError={(e) => {
+              e.currentTarget.src = "/assets/banner-billpay.png";
+            }}
           />
         </motion.div>
 
@@ -132,15 +135,29 @@ export default function BillPaySection() {
               <p className="text-[11px] text-slate-400">প্রতিদিন সকাল ৮:০০ টা থেকে রাত ১২:০০ টা পর্যন্ত</p>
             </div>
 
-            <a
+            <motion.a
               href={contact?.billingPortalUrl || "https://client.linkbd.net/pay.php?c=1255"}
               target="_blank"
               rel="noopener noreferrer"
-              className="w-full py-3.5 px-4 bg-gradient-to-r from-cyan-400 via-blue-500 to-indigo-600 hover:from-cyan-300 hover:to-blue-400 text-slate-950 font-black text-xs sm:text-sm rounded-2xl shadow-lg transition flex items-center justify-center gap-2 cursor-pointer text-center"
+              animate={{
+                y: [0, -6, 0, -3, 0],
+                boxShadow: [
+                  "0 10px 25px -5px rgba(6, 182, 212, 0.4)",
+                  "0 20px 35px -5px rgba(59, 130, 246, 0.6)",
+                  "0 10px 25px -5px rgba(6, 182, 212, 0.4)"
+                ]
+              }}
+              transition={{
+                duration: 2.2,
+                repeat: Infinity,
+                repeatDelay: 1,
+                ease: "easeInOut"
+              }}
+              className="w-full py-3.5 px-4 bg-gradient-to-r from-cyan-400 via-blue-500 to-indigo-600 hover:from-cyan-300 hover:to-blue-400 text-slate-950 font-black text-xs sm:text-sm rounded-2xl transition flex items-center justify-center gap-2 cursor-pointer text-center select-none"
             >
               <span>অফিসিয়াল অনলাইন বিলিং পোর্টালে যান</span>
               <ExternalLink className="w-4 h-4" />
-            </a>
+            </motion.a>
           </motion.div>
 
           {/* Payment Form & Animated Receipt */}

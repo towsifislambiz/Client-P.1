@@ -72,6 +72,25 @@ export default function ContactPage() {
           />
         </motion.div>
 
+        {/* Helpdesk Support Infographic if customized */}
+        {imageMap?.["contact_support"]?.currentUrl && imageMap?.["contact_support"]?.currentUrl !== imageMap?.["contact_banner"]?.currentUrl && (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.98 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            className="rounded-2xl sm:rounded-3xl overflow-hidden border border-slate-200 shadow-xl mb-10 sm:mb-16"
+          >
+            <img
+              src={imageMap["contact_support"].currentUrl}
+              alt="24/7 Helpdesk Support"
+              className="w-full h-auto object-cover max-h-[380px]"
+              onError={(e) => {
+                e.currentTarget.src = "/assets/banner-contact.png";
+              }}
+            />
+          </motion.div>
+        )}
+
         {/* Hotlines and Contact Cards Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 mb-14 sm:mb-16">
           {/* Details Column */}

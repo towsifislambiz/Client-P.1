@@ -314,6 +314,25 @@ export default function FtpTvPage() {
           </div>
         </div>
 
+        {/* Media Server Feature Showcase if customized */}
+        {imageMap?.["ftptv_feature"]?.currentUrl && imageMap?.["ftptv_feature"]?.currentUrl !== imageMap?.["ftptv_banner"]?.currentUrl && (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.98 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            className="mb-14 sm:mb-20 rounded-3xl overflow-hidden shadow-2xl border border-slate-800"
+          >
+            <img
+              src={imageMap["ftptv_feature"].currentUrl}
+              alt="Media Server Feature"
+              className="w-full h-auto object-cover max-h-[420px]"
+              onError={(e) => {
+                e.currentTarget.src = "/assets/banner-ftptv.png";
+              }}
+            />
+          </motion.div>
+        )}
+
         {/* Important BDIX Connection Guidelines & Notes */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}

@@ -107,6 +107,25 @@ export default function PackagesPage({ onSelectPackage }) {
           </div>
         </motion.div>
 
+        {/* Visual Packages Page Banner if available */}
+        {imageMap?.["packages_banner"]?.currentUrl && (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.98 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            className="mb-12 sm:mb-16 rounded-2xl sm:rounded-3xl overflow-hidden border border-slate-800 shadow-2xl max-h-[380px] bg-slate-900"
+          >
+            <img
+              src={imageMap["packages_banner"].currentUrl}
+              alt="Packages Banner"
+              className="w-full h-auto object-cover max-h-[380px]"
+              onError={(e) => {
+                e.currentTarget.src = "/assets/hero-home.png";
+              }}
+            />
+          </motion.div>
+        )}
+
         {/* Interactive Smart Package Recommender */}
         <motion.div
           initial={{ opacity: 0, scale: 0.96 }}
@@ -377,6 +396,50 @@ export default function PackagesPage({ onSelectPackage }) {
             </table>
           </div>
         </motion.div>
+
+        {/* Official Rate Cards / Promo Infographics */}
+        <div className="mb-16 space-y-6">
+          <div className="text-center max-w-2xl mx-auto mb-4">
+            <h3 className="text-xl sm:text-3xl font-black text-white mb-1.5">
+              অফিসিয়াল প্যাকেজ রেট কার্ড ও বিবরণ
+            </h3>
+            <p className="text-xs sm:text-sm text-slate-400">
+              আমাদের সকল প্যাকেজের অফিসিয়াল মূল্যতালিকা ও ফিচার চার্ট
+            </p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="rounded-2xl sm:rounded-3xl overflow-hidden border border-slate-800 shadow-2xl bg-slate-900/80 p-3 sm:p-4 flex items-center justify-center"
+            >
+              <img
+                src={imageMap?.["packages_promo"]?.currentUrl || "/assets/packages-tier1.png"}
+                alt="Package Rate Card 1"
+                className="w-full h-auto max-h-[480px] object-contain rounded-xl"
+                onError={(e) => {
+                  e.currentTarget.src = "/assets/packages-tier1.png";
+                }}
+              />
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="rounded-2xl sm:rounded-3xl overflow-hidden border border-slate-800 shadow-2xl bg-slate-900/80 p-3 sm:p-4 flex items-center justify-center"
+            >
+              <img
+                src={imageMap?.["packages_tier2"]?.currentUrl || "/assets/packages-tier2.png"}
+                alt="Package Rate Card 2"
+                className="w-full h-auto max-h-[480px] object-contain rounded-xl"
+                onError={(e) => {
+                  e.currentTarget.src = "/assets/packages-tier2.png";
+                }}
+              />
+            </motion.div>
+          </div>
+        </div>
 
         {/* FAQ Section */}
         <FaqSection />

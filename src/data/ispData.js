@@ -514,3 +514,195 @@ export const defaultAdPopup = {
   cooldownMinutes: 5,
   showOnPages: "all"
 };
+
+export const defaultPageImages = [
+  {
+    id: "home_slide1",
+    page: "Home",
+    pageLabel: "হোম পেইজ",
+    name: "হিরো স্লাইড ১ — হোম ইন্টারনেট",
+    currentUrl: "/assets/hero-home.png",
+    defaultUrl: "/assets/hero-home.png",
+    description: "হোম ইন্টারনেট স্লাইডারের মূল ব্যানার (4K স্ট্রিমিং ও ফ্যামিলি নেটওয়ার্ক)"
+  },
+  {
+    id: "home_slide2",
+    page: "Home",
+    pageLabel: "হোম পেইজ",
+    name: "হিরো স্লাইড ২ — আল্ট্রা গেমিং",
+    currentUrl: "/assets/hero-gaming.png",
+    defaultUrl: "/assets/hero-gaming.png",
+    description: "গেমিং ও লো-পিং স্লাইডারের ব্যানার (Zero Packet Loss)"
+  },
+  {
+    id: "home_slide3",
+    page: "Home",
+    pageLabel: "হোম পেইজ",
+    name: "হিরো স্লাইড ৩ — ফ্যামিলি এন্টারটেইনমেন্ট",
+    currentUrl: "/assets/hero-family.png",
+    defaultUrl: "/assets/hero-family.png",
+    description: "ফ্যামিলি ইন্টারনেট ও বিনোদনের ব্যানার চিত্র"
+  },
+  {
+    id: "home_slide4",
+    page: "Home",
+    pageLabel: "হোম পেইজ",
+    name: "হিরো স্লাইড ৪ — দেশব্যাপী নেটওয়ার্ক",
+    currentUrl: "/assets/banner-coverage.png",
+    defaultUrl: "/assets/banner-coverage.png",
+    description: "দেশব্যাপী কাভারেজ স্লাইডারের ব্যানার (এক নেটওয়ার্কে সারা বাংলাদেশ)"
+  },
+  {
+    id: "packages_banner",
+    page: "Packages",
+    pageLabel: "প্যাকেজ পেইজ",
+    name: "প্যাকেজ পেইজ হেডার ব্যানার",
+    currentUrl: "/assets/hero-home.png",
+    defaultUrl: "/assets/hero-home.png",
+    description: "প্যাকেজ পেইজের শীর্ষ ব্যানার"
+  },
+  {
+    id: "packages_promo",
+    page: "Packages",
+    pageLabel: "প্যাকেজ পেইজ",
+    name: "প্যাকেজ রেট কার্ড / অফার ইনফোগ্রাফিক ১",
+    currentUrl: "/assets/packages-tier1.png",
+    defaultUrl: "/assets/packages-tier1.png",
+    description: "অফিসিয়াল প্যাকেজ রেট কার্ড ইনফোগ্রাফিক ১"
+  },
+  {
+    id: "packages_tier2",
+    page: "Packages",
+    pageLabel: "প্যাকেজ পেইজ",
+    name: "প্যাকেজ কর্পোরেট / এন্টারপ্রাইজ ইনফোগ্রাফিক ২",
+    currentUrl: "/assets/packages-tier2.png",
+    defaultUrl: "/assets/packages-tier2.png",
+    description: "অফিসিয়াল প্যাকেজ রেট কার্ড ইনফোগ্রাফিক ২"
+  },
+  {
+    id: "coverage_banner",
+    page: "Coverage",
+    pageLabel: "কাভারেজ এরিয়া",
+    name: "কাভারেজ পেইজ হেডার ব্যানার",
+    currentUrl: "/assets/banner-coverage.png",
+    defaultUrl: "/assets/banner-coverage.png",
+    description: "কাভারেজ পেইজ ও হোমপেইজের কাভারেজ সেকশনের মূল ব্যানার"
+  },
+  {
+    id: "coverage_map",
+    page: "Coverage",
+    pageLabel: "কাভারেজ এরিয়া",
+    name: "ফাইবার নেটওয়ার্ক ম্যাপ ইনফোগ্রাফিক",
+    currentUrl: "/assets/banner-coverage.png",
+    defaultUrl: "/assets/banner-coverage.png",
+    description: "ফাইবার অপটিক ব্যাকবোন ম্যাপ চিত্র"
+  },
+  {
+    id: "billpay_banner",
+    page: "BillPay",
+    pageLabel: "বিল পরিশোধ",
+    name: "বিল পে পেইজ হেডার ব্যানার",
+    currentUrl: "/assets/banner-billpay.png",
+    defaultUrl: "/assets/banner-billpay.png",
+    description: "অনলাইন বিল পরিশোধ পেইজের শীর্ষ ব্যানার"
+  },
+  {
+    id: "payment_step1",
+    page: "BillPay",
+    pageLabel: "বিল পরিশোধ",
+    name: "পেমেন্ট গাইড ধাপ ১ — আইডি ইনপুট",
+    currentUrl: "/assets/payment-step1.jpg",
+    defaultUrl: "/assets/payment-step1.jpg",
+    description: "বিকাশ/অনলাইন বিল পরিশোধ ধাপ ১ এর নির্দেশিকা ছবি"
+  },
+  {
+    id: "payment_step2",
+    page: "BillPay",
+    pageLabel: "বিল পরিশোধ",
+    name: "পেমেন্ট গাইড ধাপ ২ — মেথড যাচাই",
+    currentUrl: "/assets/payment-step2.jpg",
+    defaultUrl: "/assets/payment-step2.jpg",
+    description: "বিকাশ/অনলাইন বিল পরিশোধ ধাপ ২ এর নির্দেশিকা ছবি"
+  },
+  {
+    id: "payment_step3",
+    page: "BillPay",
+    pageLabel: "বিল পরিশোধ",
+    name: "পেমেন্ট গাইড ধাপ ৩ — কনফার্মেশন",
+    currentUrl: "/assets/payment-step3.jpg",
+    defaultUrl: "/assets/payment-step3.jpg",
+    description: "বিকাশ/অনলাইন বিল পরিশোধ ধাপ ৩ এর নির্দেশিকা ছবি"
+  },
+  {
+    id: "ftptv_banner",
+    page: "FtpTv",
+    pageLabel: "এফটিপি ও টিভি",
+    name: "এফটিপি ও টিভি হেডার ব্যানার",
+    currentUrl: "/assets/banner-ftptv.png",
+    defaultUrl: "/assets/banner-ftptv.png",
+    description: "মিডিয়া সার্ভার হেডার ও হোম সেকশন ব্যানার"
+  },
+  {
+    id: "ftptv_feature",
+    page: "FtpTv",
+    pageLabel: "এফটিপি ও টিভি",
+    name: "মিডিয়া সার্ভার ফিচার ছবি",
+    currentUrl: "/assets/banner-ftptv.png",
+    defaultUrl: "/assets/banner-ftptv.png",
+    description: "লাইভ টিভি ও সিনেমা ওটিটি প্রিভিউ চিত্র"
+  },
+  {
+    id: "clients_banner",
+    page: "Clients",
+    pageLabel: "ক্লায়েন্টবৃন্দ",
+    name: "কর্পোরেট ক্লায়েন্ট হেডার ব্যানার",
+    currentUrl: "/assets/clients-1.png",
+    defaultUrl: "/assets/clients-1.png",
+    description: "ক্লায়েন্ট পেইজের শীর্ষ ব্যানার"
+  },
+  {
+    id: "clients_grid",
+    page: "Clients",
+    pageLabel: "ক্লায়েন্টবৃন্দ",
+    name: "ক্লায়েন্ট পার্টনার লোগো ব্যানার",
+    currentUrl: "/assets/clients-2.png",
+    defaultUrl: "/assets/clients-2.png",
+    description: "ব্যাংক ও কর্পোরেট পার্টনারদের লোগো গ্রিড চিত্র"
+  },
+  {
+    id: "offices_banner",
+    page: "Offices",
+    pageLabel: "আমাদের অফিস",
+    name: "অফিস পেইজ হেডার ব্যানার",
+    currentUrl: "/assets/banner-contact.png",
+    defaultUrl: "/assets/banner-contact.png",
+    description: "অফিস পেইজের মূল শীর্ষ ব্যানার"
+  },
+  {
+    id: "head_office_img",
+    page: "Offices",
+    pageLabel: "আমাদের অফিস",
+    name: "হেড অফিস (উত্তরা) ফটো / ভিজিটিং কার্ড",
+    currentUrl: "/assets/owner-info.png",
+    defaultUrl: "/assets/owner-info.png",
+    description: "উত্তরা হেড অফিস ও মালিক পরিচিতি কার্ডের চিত্র"
+  },
+  {
+    id: "contact_banner",
+    page: "Contact",
+    pageLabel: "যোগাযোগ",
+    name: "যোগাযোগ পেইজ মূল ব্যানার",
+    currentUrl: "/assets/banner-contact.png",
+    defaultUrl: "/assets/banner-contact.png",
+    description: "কন্টাক্ট পেইজ ও হোমপেইজের কন্টাক্ট সেকশনের মূল ব্যানার"
+  },
+  {
+    id: "contact_support",
+    page: "Contact",
+    pageLabel: "যোগাযোগ",
+    name: "২৪/৭ হেল্পডেস্ক সাপোর্ট ছবি",
+    currentUrl: "/assets/banner-contact.png",
+    defaultUrl: "/assets/banner-contact.png",
+    description: "সার্বক্ষণিক কাস্টমার কেয়ার হেল্পডেস্ক চিত্র"
+  }
+];

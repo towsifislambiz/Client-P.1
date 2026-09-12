@@ -4,7 +4,7 @@ import { useSiteData } from "../context/SiteDataContext";
 import { companyInfo } from "../data/ispData";
 
 export default function OwnerAndOffices() {
-  const { activeOffices, contact } = useSiteData();
+  const { activeOffices, contact, imageMap } = useSiteData();
   const displayOffices = activeOffices?.length > 0 ? activeOffices : companyInfo.offices;
   return (
     <section id="offices" className="py-20 bg-slate-50">
@@ -44,7 +44,7 @@ export default function OwnerAndOffices() {
               {/* Owner Screenshot Card */}
               <div className="rounded-xl overflow-hidden border border-slate-200 mb-4 bg-slate-50">
                 <img
-                  src={contact?.ownerPhoto || "/assets/owner-info.png"}
+                  src={contact?.ownerPhoto || imageMap?.["head_office_img"]?.currentUrl || "/assets/owner-info.png"}
                   alt="Owner Info"
                   className="w-full h-auto object-cover"
                   onError={(e) => {
@@ -106,9 +106,12 @@ export default function OwnerAndOffices() {
         {/* Contact Banner Image */}
         <div className="rounded-2xl overflow-hidden border border-slate-200 shadow-lg">
           <img
-            src="/assets/banner-contact.png"
+            src={imageMap?.["contact_banner"]?.currentUrl || "/assets/banner-contact.png"}
             alt="Link BD Support Team"
             className="w-full h-auto object-cover max-h-[380px]"
+            onError={(e) => {
+              e.currentTarget.src = "/assets/banner-contact.png";
+            }}
           />
         </div>
       </div>

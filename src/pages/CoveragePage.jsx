@@ -5,7 +5,7 @@ import { coverageAreas, coverageFeatures, companyInfo } from "../data/ispData";
 import { useSiteData } from "../context/SiteDataContext";
 
 export default function CoveragePage({ onOpenConnectionModal }) {
-  const { contact } = useSiteData();
+  const { contact, imageMap } = useSiteData();
   const [query, setQuery] = useState("");
   const [searchResult, setSearchResult] = useState(null);
 
@@ -237,11 +237,39 @@ export default function CoveragePage({ onOpenConnectionModal }) {
           className="rounded-2xl sm:rounded-3xl overflow-hidden border border-slate-800 shadow-2xl mb-14 sm:mb-20 bg-slate-900"
         >
           <img
-            src="/assets/banner-coverage.png"
+            src={imageMap?.["coverage_banner"]?.currentUrl || "/assets/banner-coverage.png"}
             alt="Link BD Coverage Network Map"
             className="w-full h-auto object-cover max-h-[440px]"
+            onError={(e) => {
+              e.currentTarget.src = "/assets/banner-coverage.png";
+            }}
           />
         </motion.div>
+
+        {/* Network Backbone Map Infographic if customized */}
+        {imageMap?.["coverage_map"]?.currentUrl && imageMap?.["coverage_map"]?.currentUrl !== imageMap?.["coverage_banner"]?.currentUrl && (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.97 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            className="rounded-2xl sm:rounded-3xl overflow-hidden border border-slate-800 shadow-2xl mb-14 sm:mb-20 bg-slate-900 p-3 sm:p-5 text-center"
+          >
+            <div className="text-center max-w-xl mx-auto py-2 mb-3">
+              <span className="text-[10px] font-black uppercase tracking-wider text-cyan-400 bg-cyan-950/80 px-3 py-1 rounded-full border border-cyan-500/30 inline-block mb-1.5">
+                🌐 ব্যাকবোন ফাইবার নেটওয়ার্ক ম্যাপ
+              </span>
+              <h3 className="text-base sm:text-xl font-black text-white">সমগ্র বাংলাদেশ ফাইবার অপটিক রুট ও ব্যাকবোন ম্যাপ</h3>
+            </div>
+            <img
+              src={imageMap["coverage_map"].currentUrl}
+              alt="Optical Fiber Backbone Network Map"
+              className="w-full h-auto object-contain max-h-[480px] rounded-xl mx-auto"
+              onError={(e) => {
+                e.currentTarget.src = "/assets/banner-coverage.png";
+              }}
+            />
+          </motion.div>
+        )}
 
         {/* 5 Core Pillars from Client Banner */}
         <div className="mb-14 sm:mb-20">

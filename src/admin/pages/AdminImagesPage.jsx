@@ -26,12 +26,13 @@ import ToastNotification from "../components/ToastNotification";
 import ConfirmDialog from "../components/ConfirmDialog";
 
 export default function AdminImagesPage() {
-  const { images, uploadImage, resetImage, adPopup, updateAdPopup, resetAdPopup } = useSiteData();
-  const [activeTab, setActiveTab] = useState("popup"); // "popup" | "banners"
+  const { images, uploadImage, resetImage, resetAllImages, adPopup, updateAdPopup, resetAdPopup } = useSiteData();
+  const [activeTab, setActiveTab] = useState("banners"); // "banners" | "popup"
   const [selectedPage, setSelectedPage] = useState("all");
   const [searchQuery, setSearchQuery] = useState("");
   const [toast, setToast] = useState(null);
   const [resetConfirmId, setResetConfirmId] = useState(null);
+  const [resetAllConfirmOpen, setResetAllConfirmOpen] = useState(false);
 
   // Ad Popup Form State
   const [adIsActive, setAdIsActive] = useState(adPopup?.isActive !== false);
@@ -165,6 +166,25 @@ export default function AdminImagesPage() {
     }
   };
 
+  const handleResetAllConfirm = async () => {
+    try {
+      await resetAllImages();
+      setToast({
+        type: "success",
+        title: "সব ছবি ডিফল্টে রিসেট সম্পন্ন",
+        message: "ওয়েবসাইটের সকল ছবি ও ব্যানার আসল অবস্থায় ফিরিয়ে আনা হয়েছে।"
+      });
+    } catch (err) {
+      setToast({
+        type: "error",
+        title: "রিসেট ব্যর্থ হয়েছে",
+        message: err.message
+      });
+    } finally {
+      setResetAllConfirmOpen(false);
+    }
+  };
+
   return (
     <div className="space-y-6 animate-fadeIn pb-12">
       {/* Page Header */}
@@ -179,32 +199,43 @@ export default function AdminImagesPage() {
           </p>
         </div>
 
-        {/* Primary Tab Switcher */}
-        <div className="flex items-center gap-2 bg-slate-900/90 p-1.5 rounded-2xl border border-slate-800 shadow-lg">
+        <div className="flex flex-wrap items-center gap-2.5">
           <button
-            onClick={() => setActiveTab("popup")}
-            className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition flex items-center gap-2 cursor-pointer ${
-              activeTab === "popup"
-                ? "bg-gradient-to-r from-blue-600 to-cyan-500 text-white shadow-md shadow-blue-600/30"
-                : "text-slate-400 hover:text-white hover:bg-slate-800"
-            }`}
+            onClick={() => setResetAllConfirmOpen(true)}
+            className="px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white text-xs font-semibold flex items-center gap-1.5 transition cursor-pointer border border-slate-700"
+            title="সব পেইজ ব্যানার মূল ছবিতে রিসেট করুন"
           >
-            <Megaphone className="w-4 h-4 text-cyan-300" />
-            <span>বিজ্ঞাপন পপআপ (Ad Popup)</span>
-            <span className={`w-2 h-2 rounded-full ${adIsActive ? "bg-emerald-400 animate-pulse" : "bg-slate-600"}`} />
+            <RotateCcw className="w-3.5 h-3.5" />
+            <span>ডিফল্ট রিসেট</span>
           </button>
 
-          <button
-            onClick={() => setActiveTab("banners")}
-            className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition flex items-center gap-2 cursor-pointer ${
-              activeTab === "banners"
-                ? "bg-gradient-to-r from-blue-600 to-cyan-500 text-white shadow-md shadow-blue-600/30"
-                : "text-slate-400 hover:text-white hover:bg-slate-800"
-            }`}
-          >
-            <ImageIcon className="w-4 h-4 text-cyan-300" />
-            <span>পেইজের ব্যানার সমূহ ({images.length})</span>
-          </button>
+          {/* Primary Tab Switcher */}
+          <div className="flex items-center gap-2 bg-slate-900/90 p-1.5 rounded-2xl border border-slate-800 shadow-lg">
+            <button
+              onClick={() => setActiveTab("banners")}
+              className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition flex items-center gap-2 cursor-pointer ${
+                activeTab === "banners"
+                  ? "bg-gradient-to-r from-blue-600 to-cyan-500 text-white shadow-md shadow-blue-600/30"
+                  : "text-slate-400 hover:text-white hover:bg-slate-800"
+              }`}
+            >
+              <ImageIcon className="w-4 h-4 text-cyan-300" />
+              <span>পেইজের ব্যানার সমূহ ({images.length})</span>
+            </button>
+
+            <button
+              onClick={() => setActiveTab("popup")}
+              className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition flex items-center gap-2 cursor-pointer ${
+                activeTab === "popup"
+                  ? "bg-gradient-to-r from-blue-600 to-cyan-500 text-white shadow-md shadow-blue-600/30"
+                  : "text-slate-400 hover:text-white hover:bg-slate-800"
+              }`}
+            >
+              <Megaphone className="w-4 h-4 text-cyan-300" />
+              <span>বিজ্ঞাপন পপআপ</span>
+              <span className={`w-2 h-2 rounded-full ${adIsActive ? "bg-emerald-400 animate-pulse" : "bg-slate-600"}`} />
+            </button>
+          </div>
         </div>
       </div>
 
@@ -506,7 +537,7 @@ export default function AdminImagesPage() {
         </div>
       )}
 
-      {/* Reset Confirmation Dialog */}
+      {/* Reset Single Confirmation Dialog */}
       <ConfirmDialog
         isOpen={Boolean(resetConfirmId)}
         title="ডিফল্ট ছবিতে রিসেট করবেন?"
@@ -514,6 +545,16 @@ export default function AdminImagesPage() {
         confirmLabel="হ্যাঁ, রিসেট করুন"
         onConfirm={handleResetConfirm}
         onCancel={() => setResetConfirmId(null)}
+      />
+
+      {/* Reset All Confirmation Dialog */}
+      <ConfirmDialog
+        isOpen={resetAllConfirmOpen}
+        title="সব ছবি ডিফল্টে রিসেট করবেন?"
+        message="আপনি কি ওয়েবসাইটের সকল ব্যানার ও ছবি আসল ডিফল্ট অবস্থায় ফিরিয়ে নিতে চান? আপনার আপলোড করা সব কাস্টম ছবি মুছে গিয়ে মূল ছবিগুলো ফিরে আসবে।"
+        confirmLabel="হ্যাঁ, সব রিসেট করুন"
+        onConfirm={handleResetAllConfirm}
+        onCancel={() => setResetAllConfirmOpen(false)}
       />
 
       {/* Toast Notification */}

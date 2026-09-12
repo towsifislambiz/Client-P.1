@@ -35,6 +35,25 @@ export default function OfficesPage() {
           </p>
         </motion.div>
 
+        {/* Visual Office Header Banner if available */}
+        {imageMap?.["offices_banner"]?.currentUrl && (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.98 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            className="mb-8 sm:mb-12 rounded-2xl sm:rounded-3xl overflow-hidden border border-slate-200 shadow-xl max-h-[360px]"
+          >
+            <img
+              src={imageMap["offices_banner"].currentUrl}
+              alt="Offices Banner"
+              className="w-full h-auto object-cover max-h-[360px]"
+              onError={(e) => {
+                e.currentTarget.src = "/assets/banner-contact.png";
+              }}
+            />
+          </motion.div>
+        )}
+
         {/* Owner Card & Interactive Branch Selector */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 mb-14 sm:mb-20">
           {/* Owner Credential Card */}

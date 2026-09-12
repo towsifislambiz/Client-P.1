@@ -4,7 +4,7 @@
 // Real-Time Cross-Tab & Cross-Device Synchronization Engine
 
 import React, { createContext, useContext, useState, useEffect, useCallback, useMemo } from "react";
-import { companyInfo as defaultCompanyInfo, packages as defaultPackagesList, defaultServers as defaultServersList, defaultAdPopup } from "../data/ispData";
+import { companyInfo as defaultCompanyInfo, packages as defaultPackagesList, defaultServers as defaultServersList, defaultAdPopup, defaultPageImages as defaultImagesList } from "../data/ispData";
 
 const SiteDataContext = createContext(null);
 const BROADCAST_CHANNEL_NAME = "linkbd_realtime_sync";
@@ -58,9 +58,16 @@ export const SiteDataProvider = ({ children }) => {
   const [images, setImages] = useState(() => {
     try {
       const saved = localStorage.getItem("linkbd_custom_images");
-      return saved ? JSON.parse(saved) : [];
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          const savedMap = new Map(parsed.map(img => [img.id, img]));
+          return defaultImagesList.map(def => savedMap.get(def.id) || def);
+        }
+      }
+      return defaultImagesList;
     } catch {
-      return [];
+      return defaultImagesList;
     }
   });
 
@@ -726,6 +733,23 @@ export const SiteDataProvider = ({ children }) => {
     return { success: true };
   };
 
+  const resetAllImages = async () => {
+    setImages(defaultImagesList);
+    localStorage.removeItem("linkbd_custom_images");
+    localStorage.removeItem("linkbd_images_mtime");
+    broadcastChange("images", defaultImagesList);
+
+    try {
+      await fetch("/api/images/reset", {
+        method: "POST",
+        headers: getAuthHeaders()
+      });
+    } catch (err) {
+      console.warn("[SiteData] Backend reset all images skipped:", err.message);
+    }
+    return { success: true };
+  };
+
   // ===================== PACKAGES CRUD =====================
   const createPackage = async (pkgData) => {
     const formatted = {
@@ -1272,6 +1296,7 @@ export const SiteDataProvider = ({ children }) => {
     uploadImage,
     updateImageUrl,
     resetImage,
+    resetAllImages,
     createPackage,
     updatePackage,
     deletePackage,

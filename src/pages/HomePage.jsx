@@ -5,8 +5,10 @@ import { ArrowRight, Wifi, ShieldCheck, Zap, Headphones, Tv } from "lucide-react
 import HeroSlider from "../components/HeroSlider";
 import PackagesSlider from "../components/PackagesSlider";
 import FaqSection from "../components/FaqSection";
+import { useSiteData } from "../context/SiteDataContext";
 
 export default function HomePage({ onOpenConnectionModal, onSelectPackage }) {
+  const { imageMap } = useSiteData();
   return (
     <div>
       {/* 1. Dynamic Hero Carousel */}
@@ -100,7 +102,14 @@ export default function HomePage({ onOpenConnectionModal, onSelectPackage }) {
               className="lg:col-span-6"
             >
               <div className="rounded-2xl sm:rounded-3xl overflow-hidden border border-slate-800 shadow-2xl">
-                <img src="/assets/banner-coverage.png" alt="Coverage Map" className="w-full h-auto object-cover" />
+                <img
+                  src={imageMap?.["coverage_banner"]?.currentUrl || "/assets/banner-coverage.png"}
+                  alt="Coverage Map"
+                  className="w-full h-auto object-cover"
+                  onError={(e) => {
+                    e.currentTarget.src = "/assets/banner-coverage.png";
+                  }}
+                />
               </div>
             </motion.div>
           </div>
